@@ -513,6 +513,92 @@ const DEFAULT_DATA = {
     }
   ],
 
+  franchises: [
+    {
+      id: "FRN-101",
+      centerName: "Naresh X-Press e-Clinic (City Center)",
+      partnerName: "Rajesh Singhal",
+      phone: "+91 98371 44556",
+      email: "singhal.eclinic@gmail.com",
+      city: "Aligarh",
+      district: "Aligarh",
+      state: "Uttar Pradesh",
+      address: "Shop No. 12, Ground Floor, Gandhi Market, Near Bus Stand",
+      model: "Smart Digital e-Clinic",
+      status: "Active",
+      allocatedDate: "2026-03-15",
+      monthlyConsultations: 145,
+      licenseKey: "NCH-FRN-2026-AL-998"
+    },
+    {
+      id: "FRN-102",
+      centerName: "Naresh First Aid & Trauma Center Hub",
+      partnerName: "Dr. P. K. Sharma",
+      phone: "+91 94120 77889",
+      email: "pksharma.fac@gmail.com",
+      city: "Mathura",
+      district: "Mathura",
+      state: "Uttar Pradesh",
+      address: "Plot 18, Highway Bypass, Near Industrial Corridor",
+      model: "Emergency First Aid Center",
+      status: "Active",
+      allocatedDate: "2026-05-20",
+      monthlyConsultations: 210,
+      licenseKey: "NCH-FRN-2026-MT-412"
+    },
+    {
+      id: "FRN-103",
+      centerName: "Arogya Gramin Swasthya Kendra",
+      partnerName: "Smt. Sunita Devi (ASHA Co-ordinator)",
+      phone: "+91 99270 33221",
+      email: "sunitadevi.kendra@gmail.com",
+      city: "Sasni",
+      district: "Hathras",
+      state: "Uttar Pradesh",
+      address: "Near Panchayat Bhawan, Main Road, Sasni Block",
+      model: "Rural Health & Skill Post",
+      status: "Active",
+      allocatedDate: "2026-07-10",
+      monthlyConsultations: 95,
+      licenseKey: "NCH-FRN-2026-HT-105"
+    }
+  ],
+
+  franchiseApplications: [
+    {
+      id: "FRN-APP-801",
+      applicantName: "Virendra Pratap Singh",
+      phone: "+91 98971 12233",
+      email: "virendra.singh88@gmail.com",
+      city: "Bareilly",
+      district: "Bareilly",
+      state: "Uttar Pradesh",
+      propertyType: "Commercial Rented (250 sq. ft.)",
+      preferredModel: "Smart Digital e-Clinic",
+      budget: "₹2 Lakh - ₹3 Lakh",
+      experience: "Ex-Army Medical Corps (12 years service)",
+      message: "Want to bring tele-consultation and digital diagnostics to rural periphery of Bareilly.",
+      status: "Under Review",
+      date: "2026-10-16"
+    },
+    {
+      id: "FRN-APP-802",
+      applicantName: "Amit Kumar Verma",
+      phone: "+91 94560 99887",
+      email: "amit.verma.pharma@gmail.com",
+      city: "Bulandshahr",
+      district: "Bulandshahr",
+      state: "Uttar Pradesh",
+      propertyType: "Own Commercial Shop (300 sq. ft.)",
+      preferredModel: "Emergency First Aid Center",
+      budget: "₹1.5 Lakh - ₹2 Lakh",
+      experience: "D.Pharm with 6 years pharmacy management",
+      message: "Ready with prime location on highway road.",
+      status: "New",
+      date: "2026-10-18"
+    }
+  ],
+
   studentState: {
     isLoggedIn: true,
     student: {

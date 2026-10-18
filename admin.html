@@ -86,6 +86,11 @@
         Members & Volunteers
         <span class="nav-badge-count" id="badgeMbrCount">4</span>
       </button>
+      <button class="nav-item-btn" onclick="switchPanel('franchise', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Franchise & Partners
+        <span class="nav-badge-count" id="badgeFrnAppCount">2</span>
+      </button>
 
       <div class="nav-section-title">Site Management</div>
       <button class="nav-item-btn" onclick="switchPanel('content', this)">
@@ -216,6 +221,14 @@
               <div class="metric-change neutral">● Needs Attention</div>
             </div>
             <div class="metric-icon-box" style="background:var(--adm-danger-subtle); color:var(--adm-danger);">💬</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #06b6d4; cursor:pointer;" onclick="switchPanel('franchise')">
+            <div>
+              <div class="metric-title">Franchise Centers</div>
+              <div class="metric-number" id="metricFranchiseCentersOverview">0</div>
+              <div class="metric-change positive">● Active e-Clinics Network</div>
+            </div>
+            <div class="metric-icon-box" style="background:rgba(6,182,212,0.12); color:#06b6d4;">🏥</div>
           </div>
         </div>
 
@@ -495,6 +508,127 @@
               <h4 style="font-size:0.85rem; color:var(--adm-text-secondary); margin-bottom:0.75rem;">Active Announcements:</h4>
               <div id="announcementsListAdmin"></div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL: FRANCHISE & PARTNER NETWORK ================= -->
+      <section class="admin-view-panel" id="panel-franchise">
+        <div class="panel-page-header">
+          <div>
+            <h1>Franchise & Partner Network Management</h1>
+            <p>Review new franchise applications, approve/grant licenses, onboard new partners, and manage active clinics.</p>
+          </div>
+          <div class="panel-header-actions">
+            <button class="btn-adm btn-adm-outline" onclick="exportFranchiseCSV()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export CSV
+            </button>
+            <button class="btn-adm btn-adm-primary" onclick="openOnboardFranchiseModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              + Onboard Franchise
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Grid -->
+        <div class="metric-cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); margin-bottom:1.75rem;">
+          <div class="metric-card" style="--metric-accent: #0ea5e9;">
+            <div>
+              <div class="metric-title">Active Network Centers</div>
+              <div class="metric-number" id="metricTotalFranchises">0</div>
+              <div class="metric-change positive">● Operational Units</div>
+            </div>
+            <div class="metric-icon-box">🏥</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #f59e0b;">
+            <div>
+              <div class="metric-title">Pending Applications</div>
+              <div class="metric-number" id="metricPendingFrnApps">0</div>
+              <div class="metric-change neutral">● Awaiting Review</div>
+            </div>
+            <div class="metric-icon-box" style="background:var(--adm-warning-subtle); color:var(--adm-warning);">📋</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #10b981;">
+            <div>
+              <div class="metric-title">Districts Covered</div>
+              <div class="metric-number" id="metricFranchiseDistricts">1</div>
+              <div class="metric-change positive">● Geographic Reach</div>
+            </div>
+            <div class="metric-icon-box" style="background:var(--adm-success-subtle); color:var(--adm-success);">🗺️</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #8b5cf6;">
+            <div>
+              <div class="metric-title">Network Consultations</div>
+              <div class="metric-number" id="metricTotalNetworkOPDs">0 /mo</div>
+              <div class="metric-change positive">● Rural OPD Volume</div>
+            </div>
+            <div class="metric-icon-box" style="background:rgba(139, 92, 246, 0.12); color:#8b5cf6;">🩺</div>
+          </div>
+        </div>
+
+        <!-- Subtabs switch -->
+        <div style="display:flex; gap:0.75rem; margin-bottom:1.25rem;">
+          <button id="frnSubTabActiveBtn" class="btn-adm btn-adm-primary" onclick="switchFranchiseSubTab('active')">
+            🏥 Active Franchise Centers
+          </button>
+          <button id="frnSubTabAppsBtn" class="btn-adm btn-adm-outline" onclick="switchFranchiseSubTab('applications')">
+            📋 Pending Applications & Leads
+          </button>
+        </div>
+
+        <!-- Section 1: Active Centers Table -->
+        <div id="franchiseActiveTableContainer" class="data-panel-card">
+          <div class="panel-card-header">
+            <h3 class="panel-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+              Registered Franchise Centers & Key Holders
+            </h3>
+          </div>
+          <div class="table-responsive-adm">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Center ID</th>
+                  <th>Center & Partner</th>
+                  <th>Location</th>
+                  <th>Model</th>
+                  <th>License Key</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminFranchiseActiveTbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section 2: Pending Applications Table -->
+        <div id="franchiseApplicationsContainer" class="data-panel-card" style="display:none;">
+          <div class="panel-card-header">
+            <h3 class="panel-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              Franchise Applicants & Grant Decisions
+            </h3>
+          </div>
+          <div class="table-responsive-adm">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Application Ref</th>
+                  <th>Applicant Info</th>
+                  <th>City & Space</th>
+                  <th>Preferred Model & Budget</th>
+                  <th>Status</th>
+                  <th>Grant Decisions</th>
+                </tr>
+              </thead>
+              <tbody id="adminFranchiseAppsTbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
           </div>
         </div>
       </section>
@@ -851,6 +985,128 @@
         <div class="adm-modal-footer">
           <button type="button" class="btn-adm btn-adm-outline" onclick="closeAdmModal('recordDonationModal')">Cancel</button>
           <button type="submit" class="btn-adm btn-adm-success">Generate 80G Receipt</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Onboard Franchise Partner Modal -->
+  <div class="adm-modal-overlay" id="onboardFranchiseModal">
+    <div class="adm-modal-dialog">
+      <div class="adm-modal-header">
+        <h3>Onboard New Franchise Partner & Center</h3>
+        <button class="btn-sidebar-logout" onclick="closeAdmModal('onboardFranchiseModal')">&times;</button>
+      </div>
+      <form onsubmit="saveOnboardFranchiseForm(event)">
+        <div class="adm-modal-body">
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Center Name / Clinic Title</label>
+              <input type="text" class="form-input-adm" id="onboardCenterName" required placeholder="e.g. Naresh e-Clinic - Kasganj Main">
+            </div>
+            <div class="form-group-adm">
+              <label>Franchise Model</label>
+              <select class="form-select-adm" id="onboardModel">
+                <option value="Smart Digital e-Clinic (Model A)">Smart Digital e-Clinic (Model A)</option>
+                <option value="First Aid & Trauma Post (Model B)">First Aid & Trauma Post (Model B)</option>
+                <option value="Gramin Arogya Kendra (Model C)">Gramin Arogya Kendra (Model C)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Partner / Owner Full Name</label>
+              <input type="text" class="form-input-adm" id="onboardPartnerName" required placeholder="Doctor, Pharmacist, or Entrepreneur">
+            </div>
+            <div class="form-group-adm">
+              <label>Primary Phone / WhatsApp</label>
+              <input type="tel" class="form-input-adm" id="onboardPhone" required placeholder="+91 98765 00000">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Email Address</label>
+              <input type="email" class="form-input-adm" id="onboardEmail" required placeholder="partner@gmail.com">
+            </div>
+            <div class="form-group-adm">
+              <label>City / Town</label>
+              <input type="text" class="form-input-adm" id="onboardCity" required placeholder="e.g. Kasganj">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>District</label>
+              <input type="text" class="form-input-adm" id="onboardDistrict" placeholder="e.g. Kasganj / Aligarh">
+            </div>
+            <div class="form-group-adm">
+              <label>State</label>
+              <input type="text" class="form-input-adm" id="onboardState" value="Uttar Pradesh">
+            </div>
+          </div>
+          <div class="form-group-adm">
+            <label>Full Physical Center Address</label>
+            <textarea class="form-textarea-adm" id="onboardAddress" rows="2" required placeholder="Shop/Premises No., Landmark, Road, District, Pincode..."></textarea>
+          </div>
+        </div>
+        <div class="adm-modal-footer">
+          <button type="button" class="btn-adm btn-adm-outline" onclick="closeAdmModal('onboardFranchiseModal')">Cancel</button>
+          <button type="submit" class="btn-adm btn-adm-primary">Grant License & Activate Center</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Franchise Partner Modal -->
+  <div class="adm-modal-overlay" id="editFranchiseModal">
+    <div class="adm-modal-dialog">
+      <div class="adm-modal-header">
+        <h3>Edit Franchise Center Details</h3>
+        <button class="btn-sidebar-logout" onclick="closeAdmModal('editFranchiseModal')">&times;</button>
+      </div>
+      <form onsubmit="saveEditFranchiseForm(event)">
+        <div class="adm-modal-body">
+          <input type="hidden" id="editFrnId">
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Center Name</label>
+              <input type="text" class="form-input-adm" id="editFrnCenterName" required>
+            </div>
+            <div class="form-group-adm">
+              <label>Partner / In-charge Name</label>
+              <input type="text" class="form-input-adm" id="editFrnPartnerName" required>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Phone / WhatsApp</label>
+              <input type="tel" class="form-input-adm" id="editFrnPhone" required>
+            </div>
+            <div class="form-group-adm">
+              <label>Email Address</label>
+              <input type="email" class="form-input-adm" id="editFrnEmail" required>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>City / Town</label>
+              <input type="text" class="form-input-adm" id="editFrnCity" required>
+            </div>
+            <div class="form-group-adm">
+              <label>Operating Status</label>
+              <select class="form-select-adm" id="editFrnStatus">
+                <option value="Active">Active (Live in network)</option>
+                <option value="Suspended">Suspended (Temporarily halted)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group-adm">
+            <label>Complete Center Address</label>
+            <textarea class="form-textarea-adm" id="editFrnAddress" rows="2" required></textarea>
+          </div>
+        </div>
+        <div class="adm-modal-footer">
+          <button type="button" class="btn-adm btn-adm-outline" onclick="closeAdmModal('editFranchiseModal')">Cancel</button>
+          <button type="submit" class="btn-adm btn-adm-primary">Save Changes</button>
         </div>
       </form>
     </div>

@@ -12,6 +12,7 @@ function initApp() {
   renderInstitutionsOverview();
   renderDoctorsList();
   renderCoursesList();
+  renderPublicFranchises();
   updateBookingDoctorList();
   initBookingDate();
   updateLiveIdCardPreview();
@@ -928,25 +929,107 @@ function printElement(elementId) {
   initApp();
 }
 
-// ================= TOASTS =================
-function showToast(message, type = "info") {
-  const container = document.getElementById("toastContainer");
+// ================= FRANCHISE & PARTNER NETWORK =================
+function renderPublicFranchises() {
+  const container = document.getElementById("publicFranchiseCardsList");
   if (!container) return;
 
-  const toast = document.createElement("div");
-  toast.className = `toast toast-${type}`;
-  toast.innerHTML = `
-    <div style="font-size:1.1rem;">
-      ${type === "success" ? "✓" : (type === "error" ? "⚠️" : "ℹ️")}
+  const franchises = NareshData.get("franchises") || [];
+  if (franchises.length === 0) {
+    container.innerHTML = `<div style="grid-column:1/-1; text-align:center; color:var(--text-muted); padding:1rem;">Center network loading...</div>`;
+    return;
+  }
+
+  container.innerHTML = franchises.map(f => `
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:var(--radius-md); padding:1.25rem; display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+          <span class="badge badge-primary" style="font-size:0.7rem;">${f.id}</span>
+          <span class="badge badge-success" style="font-size:0.7rem;">● ${f.status}</span>
+        </div>
+        <h4 style="font-size:1.02rem; margin-bottom:0.25rem; color:#0f172a;">${f.centerName}</h4>
+        <div style="font-size:0.8rem; color:#0284c7; font-weight:600; margin-bottom:0.5rem;">${f.model}</div>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.75rem; line-height:1.5;">
+          📍 ${f.address}, ${f.city} (${f.district})
+        </p>
+      </div>
+      <div style="border-top:1px dashed #cbd5e1; padding-top:0.75rem; font-size:0.78rem; color:#475569; display:flex; justify-content:space-between; align-items:center;">
+        <div>Operator: <strong>${f.partnerName}</strong></div>
+        <a href="https://wa.me/${f.phone.replace(/[^0-9]/g, '')}?text=Hello%20${encodeURIComponent(f.centerName)}" target="_blank" style="color:#059669; font-weight:700; text-decoration:none;">Contact Center</a>
+      </div>
     </div>
-    <div style="font-size:0.88rem; font-weight:500;">${message}</div>
-  `;
+  `).join("");
+}
 
-  container.appendChild(toast);
+function openFranchiseApplicationModal(preferredModel = "Smart Digital e-Clinic") {
+  const modelSelect = document.getElementById("quickFrnModel");
+  if (modelSelect) modelSelect.value = preferredModel;
+  const subtitle = document.getElementById("modalFranchiseSubtitle");
+  if (subtitle) subtitle.innerText = `Selected Model: ${preferredModel}`;
+  openModal("franchiseApplicationModal");
+}
 
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    toast.style.transition = "opacity 0.3s ease";
-    setTimeout(() => toast.remove(), 300);
-  }, 4000);
+function handleFranchiseApplicationSubmit(event) {
+  event.preventDefault();
+  const applications = NareshData.get("franchiseApplications") || [];
+  const token = "FRN-APP-" + Math.floor(1000 + Math.random() * 9000);
+
+  const newApp = {
+    id: token,
+    applicantName: document.getElementById("frnAppFullName").value.trim(),
+    phone: document.getElementById("frnAppPhone").value.trim(),
+    email: document.getElementById("frnAppEmail").value.trim(),
+    preferredModel: document.getElementById("frnAppModel").value,
+    city: document.getElementById("frnAppCity").value.trim(),
+    district: document.getElementById("frnAppDistrictState").value.trim(),
+    state: "Uttar Pradesh",
+    propertyType: document.getElementById("frnAppProperty").value,
+    budget: document.getElementById("frnAppBudget").value,
+    experience: document.getElementById("frnAppExperience").value.trim(),
+    status: "New",
+    date: new Date().toISOString().split("T")[0]
+  };
+
+  applications.unshift(newApp);
+  NareshData.set("franchiseApplications", applications);
+
+  // Clear inputs
+  document.getElementById("frnAppFullName").value = "";
+  document.getElementById("frnAppPhone").value = "";
+  document.getElementById("frnAppEmail").value = "";
+  document.getElementById("frnAppCity").value = "";
+  document.getElementById("frnAppDistrictState").value = "";
+  document.getElementById("frnAppExperience").value = "";
+
+  showToast(`Franchise Application Submitted! Reference Token: ${token}`, "success");
+  alert(`Thank you for applying to partner with Naresh Health Care Foundation!\n\nYour Application Reference ID: ${token}\nOur zonal verification officer will connect with you on WhatsApp / Phone within 24–48 hours.`);
+}
+
+function handleQuickFranchiseSubmit(event) {
+  event.preventDefault();
+  const applications = NareshData.get("franchiseApplications") || [];
+  const token = "FRN-APP-" + Math.floor(1000 + Math.random() * 9000);
+
+  const newApp = {
+    id: token,
+    applicantName: document.getElementById("quickFrnName").value.trim(),
+    phone: document.getElementById("quickFrnPhone").value.trim(),
+    email: document.getElementById("quickFrnEmail").value.trim(),
+    preferredModel: document.getElementById("quickFrnModel").value,
+    city: document.getElementById("quickFrnCity").value.trim(),
+    district: document.getElementById("quickFrnCity").value.trim(),
+    state: "Uttar Pradesh",
+    propertyType: document.getElementById("quickFrnSpace").value,
+    budget: "₹2 Lakh - ₹3.5 Lakh",
+    experience: "Applied via Website Quick Popup",
+    status: "New",
+    date: new Date().toISOString().split("T")[0]
+  };
+
+  applications.unshift(newApp);
+  NareshData.set("franchiseApplications", applications);
+
+  closeModal("franchiseApplicationModal");
+  showToast(`Franchise Application Submitted! Reference: ${token}`, "success");
+  alert(`Application Successful!\n\nReference Token: ${token}\nOur team will review your location details.`);
 }

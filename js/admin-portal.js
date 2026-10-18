@@ -119,6 +119,7 @@ function switchPanel(panelId, btnElement) {
       members: "Membership & Volunteers",
       content: "Website Notices & Helplines",
       institutions: "Four Institutions Profile",
+      franchise: "Franchise & Partner Network",
       inquiries: "Patient Inquiries & Feedback",
       settings: "Database & System Backups"
     };
@@ -132,6 +133,7 @@ function switchPanel(panelId, btnElement) {
   if (panelId === "courses") renderCoursesAdmin();
   if (panelId === "donations") renderDonationsAdmin();
   if (panelId === "members") renderMembersAdmin();
+  if (panelId === "franchise") renderFranchiseAdmin();
   if (panelId === "content") loadSiteSettingsForm();
   if (panelId === "institutions") loadInstitutionsAdmin();
   if (panelId === "inquiries") renderInquiriesAdmin();
@@ -157,6 +159,7 @@ function initAdminDashboard() {
   renderCoursesAdmin();
   renderDonationsAdmin();
   renderMembersAdmin();
+  renderFranchiseAdmin();
   loadSiteSettingsForm();
   loadInstitutionsAdmin();
   renderInquiriesAdmin();
@@ -171,10 +174,13 @@ function refreshOverviewMetrics() {
   const donations = NareshData.get("donations") || [];
   const inquiries = NareshData.get("enquiries") || [];
   const courses = NareshData.get("courses") || [];
+  const franchises = NareshData.get("franchises") || [];
+  const frnApps = NareshData.get("franchiseApplications") || [];
 
   const totalDonations = donations.reduce((sum, d) => sum + (d.amount || 0), 0);
   const activeMembers = members.filter(m => m.status === "Approved").length;
   const pendingInquiries = inquiries.filter(i => i.status !== "Replied").length;
+  const pendingFrnApps = frnApps.filter(a => a.status === "New" || a.status === "Under Review").length;
   const confirmedApts = appointments.filter(a => a.status === "Confirmed" || a.status === "Requested").length;
 
   // Set card numbers
@@ -184,6 +190,7 @@ function refreshOverviewMetrics() {
   setText("metricApprovedMembers", activeMembers);
   setText("metricPendingInquiries", pendingInquiries);
   setText("metricActiveCourses", courses.length);
+  setText("metricFranchiseCentersOverview", franchises.length);
 
   // Update badge counts in sidebar
   setText("badgeAptCount", appointments.length);
@@ -191,6 +198,7 @@ function refreshOverviewMetrics() {
   setText("badgeMbrCount", members.length);
   setText("badgeDonCount", donations.length);
   setText("badgeInqCount", pendingInquiries);
+  setText("badgeFrnAppCount", pendingFrnApps);
 
   // Render recent activity table
   renderRecentActivityTable(appointments.slice(-5).reverse());
@@ -802,6 +810,358 @@ function printMemberIdCard(memberId) {
     `;
     window.print();
   }
+}
+
+// ================= FRANCHISE & PARTNER NETWORK =================
+let currentFranchiseSubTab = "active";
+
+function switchFranchiseSubTab(tabName) {
+  currentFranchiseSubTab = tabName;
+  const btnActive = document.getElementById("frnSubTabActiveBtn");
+  const btnApps = document.getElementById("frnSubTabAppsBtn");
+  const secActive = document.getElementById("franchiseActiveTableContainer");
+  const secApps = document.getElementById("franchiseApplicationsContainer");
+
+  if (tabName === "active") {
+    if (btnActive) {
+      btnActive.classList.add("btn-adm-primary");
+      btnActive.classList.remove("btn-adm-outline");
+    }
+    if (btnApps) {
+      btnApps.classList.remove("btn-adm-primary");
+      btnApps.classList.add("btn-adm-outline");
+    }
+    if (secActive) secActive.style.display = "block";
+    if (secApps) secApps.style.display = "none";
+  } else {
+    if (btnActive) {
+      btnActive.classList.remove("btn-adm-primary");
+      btnActive.classList.add("btn-adm-outline");
+    }
+    if (btnApps) {
+      btnApps.classList.add("btn-adm-primary");
+      btnApps.classList.remove("btn-adm-outline");
+    }
+    if (secActive) secActive.style.display = "none";
+    if (secApps) secApps.style.display = "block";
+  }
+}
+
+function renderFranchiseAdmin() {
+  const franchises = NareshData.get("franchises") || [];
+  const applications = NareshData.get("franchiseApplications") || [];
+
+  const pendingApps = applications.filter(a => a.status === "New" || a.status === "Under Review");
+  const activeCenters = franchises.filter(f => f.status === "Active");
+  const uniqueDistricts = [...new Set(franchises.map(f => f.district))].length;
+  const totalNetworkOPDs = franchises.reduce((sum, f) => sum + (f.monthlyConsultations || 0), 0);
+
+  // Update stats
+  setText("metricTotalFranchises", franchises.length);
+  setText("metricPendingFrnApps", pendingApps.length);
+  setText("metricFranchiseDistricts", uniqueDistricts || 1);
+  setText("metricTotalNetworkOPDs", totalNetworkOPDs.toLocaleString("en-IN") + " /mo");
+
+  // Update badge count
+  setText("badgeFrnAppCount", pendingApps.length);
+
+  // Render Active Centers Table
+  const activeTbody = document.getElementById("adminFranchiseActiveTbody");
+  if (activeTbody) {
+    if (franchises.length === 0) {
+      activeTbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:2rem; color:var(--adm-text-muted);">No franchise centers registered. Click "+ Onboard Franchise" to add.</td></tr>`;
+    } else {
+      activeTbody.innerHTML = franchises.map(f => `
+        <tr>
+          <td><strong style="color:var(--adm-primary);">${f.id}</strong></td>
+          <td>
+            <div style="font-weight:600; color:#fff;">${f.centerName}</div>
+            <div style="font-size:0.75rem; color:var(--adm-text-secondary);">Partner: <strong>${f.partnerName}</strong> • ${f.phone}</div>
+          </td>
+          <td>
+            <div>${f.city}, ${f.district}</div>
+            <div style="font-size:0.75rem; color:var(--adm-text-muted);">${f.address}</div>
+          </td>
+          <td><span class="badge-chip chip-primary">${f.model}</span></td>
+          <td>
+            <code style="font-size:0.75rem; background:rgba(0,0,0,0.3); padding:0.2rem 0.4rem; border-radius:4px; color:#38bdf8;">${f.licenseKey}</code>
+          </td>
+          <td>${getStatusBadge(f.status)}</td>
+          <td>
+            <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
+              <button class="btn-adm btn-adm-outline btn-adm-sm" onclick="printFranchiseCertificate('${f.id}')" title="Print Authorization Certificate">📜 Certificate</button>
+              <button class="btn-adm btn-adm-outline btn-adm-sm" onclick="openEditFranchiseModal('${f.id}')" title="Edit Center">✏️ Edit</button>
+              <button class="btn-adm btn-adm-sm ${f.status === 'Active' ? 'btn-adm-outline' : 'btn-adm-success'}" onclick="toggleFranchiseStatus('${f.id}')">
+                ${f.status === 'Active' ? '⏸️ Suspend' : '▶️ Activate'}
+              </button>
+              <button class="btn-adm btn-adm-outline btn-adm-sm" onclick="openWhatsAppPartner('${f.phone}', '${f.partnerName}', '${f.id}')">💬</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+  }
+
+  // Render Applications Table
+  const appsTbody = document.getElementById("adminFranchiseAppsTbody");
+  if (appsTbody) {
+    if (applications.length === 0) {
+      appsTbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:2rem; color:var(--adm-text-muted);">No franchise applications received yet.</td></tr>`;
+    } else {
+      appsTbody.innerHTML = applications.map(app => `
+        <tr>
+          <td><strong style="color:var(--adm-primary);">${app.id}</strong></td>
+          <td>
+            <div style="font-weight:600; color:#fff;">${app.applicantName}</div>
+            <div style="font-size:0.75rem; color:var(--adm-text-secondary);">${app.phone} • ${app.email}</div>
+          </td>
+          <td>
+            <div>${app.city}, ${app.district || ''}</div>
+            <div style="font-size:0.75rem; color:var(--adm-text-muted);">${app.propertyType}</div>
+          </td>
+          <td>
+            <div><strong>${app.preferredModel}</strong></div>
+            <div style="font-size:0.75rem; color:var(--adm-success);">Budget: ${app.budget}</div>
+          </td>
+          <td>${getStatusBadge(app.status)}</td>
+          <td>
+            <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
+              ${app.status !== 'Approved' ? `
+                <button class="btn-adm btn-adm-success btn-adm-sm" onclick="approveFranchiseApplication('${app.id}')">✅ Grant Franchise</button>
+              ` : `
+                <span class="badge-chip chip-success">✓ Granted</span>
+              `}
+              ${app.status !== 'Rejected' && app.status !== 'Approved' ? `
+                <button class="btn-adm btn-adm-danger btn-adm-sm" onclick="rejectFranchiseApplication('${app.id}')">❌ Reject</button>
+              ` : ""}
+              <button class="btn-adm btn-adm-outline btn-adm-sm" onclick="openWhatsAppPartner('${app.phone}', '${app.applicantName}', '${app.id}')">💬 WhatsApp</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+    }
+  }
+}
+
+function approveFranchiseApplication(appId) {
+  const applications = NareshData.get("franchiseApplications") || [];
+  const franchises = NareshData.get("franchises") || [];
+
+  const app = applications.find(a => a.id === appId);
+  if (!app) return;
+
+  const nextId = "FRN-" + (100 + franchises.length + 1);
+  const cityCode = (app.city.substring(0, 2) || "UP").toUpperCase();
+  const licenseKey = `NCH-FRN-2026-${cityCode}-${Math.floor(100 + Math.random() * 900)}`;
+
+  const newFranchise = {
+    id: nextId,
+    centerName: `Naresh ${app.preferredModel} (${app.city})`,
+    partnerName: app.applicantName,
+    phone: app.phone,
+    email: app.email,
+    city: app.city,
+    district: app.district || app.city,
+    state: app.state || "Uttar Pradesh",
+    address: `${app.city} Center, ${app.propertyType}`,
+    model: app.preferredModel,
+    status: "Active",
+    allocatedDate: new Date().toISOString().split("T")[0],
+    monthlyConsultations: 0,
+    licenseKey: licenseKey
+  };
+
+  app.status = "Approved";
+  franchises.unshift(newFranchise);
+
+  NareshData.set("franchiseApplications", applications);
+  NareshData.set("franchises", franchises);
+
+  renderFranchiseAdmin();
+  refreshOverviewMetrics();
+
+  showToast(`Approved! New Franchise awarded to ${app.applicantName} with Code: ${nextId}`, "success");
+  alert(`🎉 Franchise Awarded Successfully!\n\nCenter Code: ${nextId}\nLicense Key: ${licenseKey}\nPartner: ${app.applicantName}\nCity: ${app.city}\n\nThe center is now active in your network and visible on the website!`);
+}
+
+function rejectFranchiseApplication(appId) {
+  if (confirm("Reject this franchise application?")) {
+    const applications = NareshData.get("franchiseApplications") || [];
+    const app = applications.find(a => a.id === appId);
+    if (app) {
+      app.status = "Rejected";
+      NareshData.set("franchiseApplications", applications);
+      renderFranchiseAdmin();
+      refreshOverviewMetrics();
+      showToast(`Application ${appId} rejected.`, "info");
+    }
+  }
+}
+
+function openOnboardFranchiseModal() {
+  document.getElementById("onboardCenterName").value = "";
+  document.getElementById("onboardPartnerName").value = "";
+  document.getElementById("onboardPhone").value = "";
+  document.getElementById("onboardEmail").value = "";
+  document.getElementById("onboardCity").value = "";
+  document.getElementById("onboardDistrict").value = "";
+  document.getElementById("onboardAddress").value = "";
+  openAdmModal("onboardFranchiseModal");
+}
+
+function saveOnboardFranchiseForm(event) {
+  event.preventDefault();
+  const franchises = NareshData.get("franchises") || [];
+  const city = document.getElementById("onboardCity").value.trim();
+  const nextId = "FRN-" + (100 + franchises.length + 1);
+  const cityCode = (city.substring(0, 2) || "UP").toUpperCase();
+  const licenseKey = `NCH-FRN-2026-${cityCode}-${Math.floor(100 + Math.random() * 900)}`;
+
+  const newFranchise = {
+    id: nextId,
+    centerName: document.getElementById("onboardCenterName").value.trim(),
+    partnerName: document.getElementById("onboardPartnerName").value.trim(),
+    phone: document.getElementById("onboardPhone").value.trim(),
+    email: document.getElementById("onboardEmail").value.trim(),
+    city: city,
+    district: document.getElementById("onboardDistrict").value.trim() || city,
+    state: document.getElementById("onboardState").value.trim() || "Uttar Pradesh",
+    address: document.getElementById("onboardAddress").value.trim(),
+    model: document.getElementById("onboardModel").value,
+    status: "Active",
+    allocatedDate: new Date().toISOString().split("T")[0],
+    monthlyConsultations: 0,
+    licenseKey: licenseKey
+  };
+
+  franchises.unshift(newFranchise);
+  NareshData.set("franchises", franchises);
+
+  closeAdmModal("onboardFranchiseModal");
+  renderFranchiseAdmin();
+  refreshOverviewMetrics();
+
+  showToast(`Onboarded new franchise: ${newFranchise.centerName} (${nextId})`, "success");
+}
+
+function openEditFranchiseModal(frnId) {
+  const franchises = NareshData.get("franchises") || [];
+  const f = franchises.find(fr => fr.id === frnId);
+  if (!f) return;
+
+  document.getElementById("editFrnId").value = f.id;
+  document.getElementById("editFrnCenterName").value = f.centerName;
+  document.getElementById("editFrnPartnerName").value = f.partnerName;
+  document.getElementById("editFrnPhone").value = f.phone;
+  document.getElementById("editFrnEmail").value = f.email;
+  document.getElementById("editFrnCity").value = f.city;
+  document.getElementById("editFrnAddress").value = f.address;
+  document.getElementById("editFrnStatus").value = f.status;
+
+  openAdmModal("editFranchiseModal");
+}
+
+function saveEditFranchiseForm(event) {
+  event.preventDefault();
+  const franchises = NareshData.get("franchises") || [];
+  const frnId = document.getElementById("editFrnId").value;
+  const f = franchises.find(fr => fr.id === frnId);
+
+  if (f) {
+    f.centerName = document.getElementById("editFrnCenterName").value.trim();
+    f.partnerName = document.getElementById("editFrnPartnerName").value.trim();
+    f.phone = document.getElementById("editFrnPhone").value.trim();
+    f.email = document.getElementById("editFrnEmail").value.trim();
+    f.city = document.getElementById("editFrnCity").value.trim();
+    f.address = document.getElementById("editFrnAddress").value.trim();
+    f.status = document.getElementById("editFrnStatus").value;
+
+    NareshData.set("franchises", franchises);
+    closeAdmModal("editFranchiseModal");
+    renderFranchiseAdmin();
+    showToast(`Updated Franchise Center: ${f.centerName}`, "success");
+  }
+}
+
+function toggleFranchiseStatus(frnId) {
+  const franchises = NareshData.get("franchises") || [];
+  const f = franchises.find(fr => fr.id === frnId);
+  if (f) {
+    f.status = f.status === "Active" ? "Suspended" : "Active";
+    NareshData.set("franchises", franchises);
+    renderFranchiseAdmin();
+    showToast(`Franchise ${frnId} status changed to ${f.status}`, "info");
+  }
+}
+
+function openWhatsAppPartner(phone, name, id) {
+  const cleanPhone = phone.replace(/[^0-9]/g, "");
+  const msg = encodeURIComponent(`Greetings ${name}, this is from Naresh Health Care Foundation Operations regarding your Franchise / Center ${id}.`);
+  window.open(`https://wa.me/${cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone}?text=${msg}`, "_blank");
+}
+
+function printFranchiseCertificate(frnId) {
+  const franchises = NareshData.get("franchises") || [];
+  const f = franchises.find(fr => fr.id === frnId);
+  if (!f) return;
+
+  const printArea = document.getElementById("printSlipContent");
+  if (printArea) {
+    printArea.innerHTML = `
+      <div style="font-family: Arial, sans-serif; padding: 35px; border: 8px double #0284c7; max-width: 720px; margin: 0 auto; color: #000; background: #fff; border-radius: 8px;">
+        <div style="text-align: center; border-bottom: 2px solid #0284c7; padding-bottom: 15px; margin-bottom: 20px;">
+          <div style="font-size: 36px; margin-bottom: 5px;">🏥</div>
+          <h1 style="margin: 0; font-size: 22px; color: #0284c7; text-transform: uppercase;">NARESH COMMUNITY HEALTH CARE & SKILL EMPOWERMENT INDIA FOUNDATION</h1>
+          <p style="margin: 4px 0; font-size: 13px; font-weight: bold; color: #334155;">CENTRAL HEALTHCARE ALLIANCE & PARTNERSHIP DIVISION</p>
+          <p style="margin: 0; font-size: 11px; color: #64748b;">Registered Non-Profit Health Trust | Section 80G Certified | PAN & CSR Compliant</p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 25px;">
+          <h2 style="font-size: 20px; color: #0f172a; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 5px;">CERTIFICATE OF FRANCHISE AUTHORIZATION</h2>
+          <div style="font-size: 13px; color: #475569;">License Reference No: <strong>${f.licenseKey}</strong> | Center Code: <strong>${f.id}</strong></div>
+        </div>
+
+        <p style="font-size: 14px; line-height: 1.8; text-align: justify; margin-bottom: 20px;">
+          This is to formally certify that <strong>${f.partnerName}</strong> is hereby granted the official authorization to establish and operate an authorized <strong>${f.model}</strong> under the brand stewardship and clinical protocol of Naresh Health Care Foundation.
+        </p>
+
+        <table style="width: 100%; font-size: 13px; margin-bottom: 25px; border-collapse: collapse; background: #f8fafc; border: 1px solid #cbd5e1;">
+          <tr><td style="padding: 8px 12px; border: 1px solid #cbd5e1; width: 35%;"><strong>Center Name:</strong></td><td style="padding: 8px 12px; border: 1px solid #cbd5e1;"><strong>${f.centerName}</strong></td></tr>
+          <tr><td style="padding: 8px 12px; border: 1px solid #cbd5e1;"><strong>Franchise Operator:</strong></td><td style="padding: 8px 12px; border: 1px solid #cbd5e1;">${f.partnerName} (${f.phone})</td></tr>
+          <tr><td style="padding: 8px 12px; border: 1px solid #cbd5e1;"><strong>Location & Address:</strong></td><td style="padding: 8px 12px; border: 1px solid #cbd5e1;">${f.address}, ${f.city}, District ${f.district}, ${f.state}</td></tr>
+          <tr><td style="padding: 8px 12px; border: 1px solid #cbd5e1;"><strong>Operating Model:</strong></td><td style="padding: 8px 12px; border: 1px solid #cbd5e1;">${f.model}</td></tr>
+          <tr><td style="padding: 8px 12px; border: 1px solid #cbd5e1;"><strong>Authorization Date:</strong></td><td style="padding: 8px 12px; border: 1px solid #cbd5e1;">${f.allocatedDate} (Valid through March 2028)</td></tr>
+        </table>
+
+        <div style="font-size: 11px; color: #475569; line-height: 1.5; margin-bottom: 30px;">
+          <em>*This authorization entitles the franchise to operate tele-consultation stations, first-aid posts, receive medical camp support, and utilize Naresh Foundation branding in accordance with the National Healthcare Partnership Code.</em>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid #94a3b8; padding-top: 30px; margin-top: 30px;">
+          <div style="text-align: center;">
+            <div style="font-size: 18px; margin-bottom: 4px;">🛡️</div>
+            <div style="font-size: 11px; font-weight: bold;">Official Foundation Seal</div>
+            <div style="font-size: 10px; color: #64748b;">Verified & Encrypted</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-family: cursive; font-size: 18px; color: #0284c7; margin-bottom: 4px;">Dr. Arvind Naresh</div>
+            <div style="font-size: 12px; font-weight: bold; border-top: 1px solid #000; padding-top: 3px;">Chief Medical Director</div>
+            <div style="font-size: 10px; color: #64748b;">Naresh Healthcare Foundation</div>
+          </div>
+          <div style="text-align: center;">
+            <div style="font-family: cursive; font-size: 18px; color: #0f766e; margin-bottom: 4px;">Executive Registrar</div>
+            <div style="font-size: 12px; font-weight: bold; border-top: 1px solid #000; padding-top: 3px;">Zonal Operations Head</div>
+            <div style="font-size: 10px; color: #64748b;">Partnership & Network Wing</div>
+          </div>
+        </div>
+      </div>
+    `;
+    window.print();
+  }
+}
+
+function exportFranchiseCSV() {
+  exportCSV("franchises");
 }
 
 // ================= SITE SETTINGS & BROADCAST =================
