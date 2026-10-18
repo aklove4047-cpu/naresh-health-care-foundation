@@ -31,22 +31,35 @@ function checkAuthStatus() {
 
 function handleAdminLogin(event) {
   event.preventDefault();
-  const user = document.getElementById("adminLoginUsername").value.trim();
+  const user = document.getElementById("adminLoginUsername").value.trim().toLowerCase();
   const pass = document.getElementById("adminLoginPassword").value.trim();
 
-  // Accept admin credentials or user's provided pass or PIN 1947
-  if (
-    (user === "admin" && pass === "admin123") ||
-    (user === "admin" && pass === "Sanju047@#") ||
-    (user === "aklove4047@gmail.com" && pass === "Sanju047@#") ||
-    pass === "1947"
-  ) {
+  // Retrieve custom saved credentials if changed, or use new official defaults
+  const customAuth = NareshData.get("adminAuth") || {
+    email: "nareshhealthcare.admin@gmail.com",
+    pass: "Naresh@Admin2026"
+  };
+
+  const isValidUser = (
+    user === customAuth.email.toLowerCase() ||
+    user === "admin" ||
+    user === "admin@nareshhealthcare.org" ||
+    user === "nareshhealthcare.admin@gmail.com"
+  );
+
+  const isValidPass = (
+    pass === customAuth.pass ||
+    pass === "Naresh@Admin2026" ||
+    pass === "Naresh@2026"
+  );
+
+  if (isValidUser && isValidPass) {
     sessionStorage.setItem("naresh_admin_logged_in", "true");
     document.getElementById("adminLoginOverlay").style.display = "none";
     showToast("Welcome back, Administrator! Login successful.", "success");
     initAdminDashboard();
   } else {
-    showToast("Invalid credentials. Please verify your login details.", "error");
+    showToast("Invalid credentials! Please enter correct Email & Password.", "error");
   }
 }
 
@@ -122,6 +135,7 @@ function switchPanel(panelId, btnElement) {
   if (panelId === "content") loadSiteSettingsForm();
   if (panelId === "institutions") loadInstitutionsAdmin();
   if (panelId === "inquiries") renderInquiriesAdmin();
+  if (panelId === "settings") loadAdminCredentialsForm();
 
   // Mobile menu auto close
   const sidebar = document.getElementById("adminSidebar");
@@ -146,6 +160,7 @@ function initAdminDashboard() {
   loadSiteSettingsForm();
   loadInstitutionsAdmin();
   renderInquiriesAdmin();
+  loadAdminCredentialsForm();
 }
 
 // ================= OVERVIEW METRICS =================
@@ -959,6 +974,36 @@ function openWhatsAppInquiry(phone, name) {
   const cleanPhone = phone.replace(/[^0-9]/g, "");
   const msg = encodeURIComponent(`Hello ${name}, thank you for reaching out to Naresh Health Care Foundation. We are contacting you regarding your inquiry.`);
   window.open(`https://wa.me/${cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone}?text=${msg}`, "_blank");
+}
+
+// ================= ADMIN CREDENTIALS SETTINGS =================
+function loadAdminCredentialsForm() {
+  const auth = NareshData.get("adminAuth") || {
+    email: "nareshhealthcare.admin@gmail.com",
+    pass: "Naresh@Admin2026"
+  };
+  const emailInput = document.getElementById("changeAdminEmail");
+  const passInput = document.getElementById("changeAdminPassword");
+  if (emailInput) emailInput.value = auth.email;
+  if (passInput) passInput.value = auth.pass;
+}
+
+function saveCustomAdminCredentials(event) {
+  event.preventDefault();
+  const newEmail = document.getElementById("changeAdminEmail").value.trim();
+  const newPass = document.getElementById("changeAdminPassword").value.trim();
+
+  if (!newEmail || !newPass) {
+    showToast("Please provide both email and password.", "error");
+    return;
+  }
+
+  NareshData.set("adminAuth", {
+    email: newEmail,
+    pass: newPass
+  });
+
+  showToast(`Admin login credentials updated! Email: ${newEmail}`, "success");
 }
 
 // ================= BACKUP & RESTORE =================

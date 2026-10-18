@@ -26,12 +26,12 @@
       
       <form onsubmit="handleAdminLogin(event)">
         <div class="login-form-group">
-          <label>Admin Username / Email</label>
-          <input type="text" id="adminLoginUsername" class="login-input" value="admin" required placeholder="admin">
+          <label>Admin Email / Username</label>
+          <input type="text" id="adminLoginUsername" class="login-input" value="nareshhealthcare.admin@gmail.com" required placeholder="nareshhealthcare.admin@gmail.com">
         </div>
         <div class="login-form-group">
-          <label>Password or Security PIN</label>
-          <input type="password" id="adminLoginPassword" class="login-input" value="Sanju047@#" required placeholder="••••••••">
+          <label>Admin Security Password</label>
+          <input type="password" id="adminLoginPassword" class="login-input" value="Naresh@Admin2026" required placeholder="••••••••">
         </div>
         <button type="submit" class="login-submit-btn">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
@@ -40,7 +40,9 @@
       </form>
 
       <div class="login-hint">
-        💡 <strong>Quick Login Access:</strong> Default username: <code>admin</code> • Password: <code>Sanju047@#</code> (or PIN <code>1947</code>)
+        💡 <strong>Official Admin Login:</strong><br>
+        Email: <code>nareshhealthcare.admin@gmail.com</code><br>
+        Password: <code>Naresh@Admin2026</code>
       </div>
     </div>
   </div>
@@ -574,12 +576,22 @@
             <button class="btn-adm btn-adm-outline" onclick="document.getElementById('backupFileInput').click()">Select JSON File to Restore</button>
           </div>
 
-          <div class="data-panel-card" style="padding:1.5rem;">
-            <h3 style="color:var(--adm-danger); margin-bottom:0.5rem;">⚠️ Factory Reset</h3>
+          <div class="data-panel-card" style="padding:1.5rem; grid-column: 1 / -1;">
+            <h3 style="color:#fff; margin-bottom:0.5rem;">🔐 Change Admin Login Credentials</h3>
             <p style="font-size:0.85rem; color:var(--adm-text-secondary); margin-bottom:1.25rem;">
-              Reinitialize all platform data back to original default mock records. Use with caution.
+              Set a custom admin email and password for accessing this operations portal.
             </p>
-            <button class="btn-adm btn-adm-danger" onclick="resetSystemData()">Restore Default Records</button>
+            <form onsubmit="saveCustomAdminCredentials(event)" style="display:grid; grid-template-columns: 1fr 1fr auto; gap:1rem; align-items:end;">
+              <div class="form-group-adm" style="margin-bottom:0;">
+                <label>Admin Login Email</label>
+                <input type="email" class="form-input-adm" id="changeAdminEmail" required value="nareshhealthcare.admin@gmail.com">
+              </div>
+              <div class="form-group-adm" style="margin-bottom:0;">
+                <label>New Admin Password</label>
+                <input type="text" class="form-input-adm" id="changeAdminPassword" required value="Naresh@Admin2026">
+              </div>
+              <button type="submit" class="btn-adm btn-adm-primary" style="height:38px;">💾 Update Login Details</button>
+            </form>
           </div>
         </div>
       </section>
