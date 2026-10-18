@@ -1,0 +1,17 @@
+{
+  "name": "naresh-health-care-foundation",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Official Web Platform for Naresh Community Health Care & Skill Empowerment India Foundation",
+  "scripts": {
+    "build": "node -e \"console.log('Build successful')\"",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "healthcare",
+    "foundation",
+    "eclinic"
+  ],
+  "author": "Naresh Foundation",
+  "license": "MIT"
+}
