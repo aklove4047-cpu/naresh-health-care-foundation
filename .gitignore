@@ -1,0 +1,17 @@
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Node / Dependencies
+node_modules/
+.npm
+package-lock.json
+
+# Environment / Secrets
+.env
+.env.local
+
+# Cloudflare / Build
+.wrangler/
+dist/

@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Naresh All-in-One Platform | Foundation, Clinics, First Aid Centers & E-Learning</title>
+  <meta name="description" content="Official platform of Naresh Community Health Care & Skill Empowerment India Foundation, Naresh X-Press e-Clinic, Community Health Care Center & Naresh First Aid Center.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Unified Sticky Header Group (Prevents Text Overlapping) -->
+  <div class="site-header-group">
+    <!-- Emergency & Medical Disclaimer Topbar -->
+    <div class="emergency-topbar" id="emergencyTopbar">
+      <div class="container">
+        <div class="emergency-tag">
+          <span class="pulse-dot"></span>
+          <strong>Medical Notice:</strong> For life-threatening emergencies, call <strong>108 / 112</strong> or visit your nearest emergency room.
+        </div>
+        <div class="topbar-contact-items">
+          <span>📞 Helpline: <strong>+91 98765 43210</strong></span>
+          <a href="https://wa.me/919876543210?text=Hello%20Naresh%20Healthcare,%20I%20need%20assistance" target="_blank" class="badge badge-success" style="color: #065f46; font-weight:700;">
+            💬 WhatsApp Us
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Navigation Header -->
+    <header class="main-header">
+      <div class="container nav-container">
+        <div class="brand-wrapper" onclick="showSection('home')">
+          <div class="brand-icon-box">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+              <path d="M12 9v6m-3-3h6"/>
+            </svg>
+          </div>
+          <div class="brand-titles">
+            <h1>NARESH HEALTHCARE</h1>
+            <span>Foundation • Clinics • First Aid</span>
+          </div>
+        </div>
+
+        <ul class="nav-links">
+          <li><a href="#home" onclick="showSection('home')" id="nav-home" class="active">Home</a></li>
+          <li><a href="#institutions" onclick="showSection('institutions')" id="nav-institutions">Institutions</a></li>
+          <li><a href="#doctors" onclick="showSection('doctors')" id="nav-doctors">Doctors</a></li>
+          <li><a href="#booking" onclick="showSection('booking')" id="nav-booking">Book Appointment</a></li>
+          <li><a href="#courses" onclick="showSection('courses')" id="nav-courses">E-Learning</a></li>
+          <li><a href="#membership" onclick="showSection('membership')" id="nav-membership">Membership</a></li>
+          <li><a href="#contact" onclick="showSection('contact')" id="nav-contact">Contact</a></li>
+        </ul>
+
+        <div class="nav-actions">
+          <button class="btn btn-sm btn-outline" onclick="openStudentPortalModal()">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+            Student
+          </button>
+          <button class="btn btn-sm btn-primary" onclick="openDonationModal()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            Donate
+          </button>
+          <button class="btn btn-sm btn-secondary" onclick="openAdminModal()" title="Admin Operations">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Admin
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Multi-Institution Fast Switcher Bar -->
+    <div class="institution-bar">
+      <div class="container">
+        <div class="inst-pills">
+          <button class="inst-pill-btn active" onclick="filterInstitutionView('foundation')">
+            <div class="inst-pill-icon">🏛️</div>
+            <div class="inst-pill-text">
+              <strong>Naresh Foundation</strong>
+              <span>Community Health & Skills</span>
+            </div>
+          </button>
+          <button class="inst-pill-btn" onclick="filterInstitutionView('eclinic')">
+            <div class="inst-pill-icon">💻</div>
+            <div class="inst-pill-text">
+              <strong>X-Press e-Clinic</strong>
+              <span>Digital Consultations</span>
+            </div>
+          </button>
+          <button class="inst-pill-btn" onclick="filterInstitutionView('chc_fac')">
+            <div class="inst-pill-icon">🏥</div>
+            <div class="inst-pill-text">
+              <strong>Community Health Center</strong>
+              <span>Primary Care & First Aid</span>
+            </div>
+          </button>
+          <button class="inst-pill-btn" onclick="filterInstitutionView('fac')">
+            <div class="inst-pill-icon">🚑</div>
+            <div class="inst-pill-text">
+              <strong>Naresh First Aid Center</strong>
+              <span>Trauma & Rapid Care</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic Main Content Wrapper -->
+  <main id="app-content">
+
+    <!-- HOME SECTION -->
+    <div id="section-home" class="page-view">
+      
+      <!-- Hero Section -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-content">
+              <span class="badge badge-primary">Unified Healthcare & Empowerment Ecosystem</span>
+              <h1>Compassionate Healthcare & <span class="gradient-text">Life-Saving Skills</span> For All</h1>
+              <p class="hero-subtitle">
+                Uniting 4 distinguished institutions under one trusted umbrella — delivering quality outpatient clinics, digital e-consultations, 24/7 first aid centers, and vocational skill certifications.
+              </p>
+              
+              <div class="hero-actions">
+                <button class="btn btn-primary btn-lg" onclick="showSection('booking')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                  Book Doctor Appointment
+                </button>
+                <button class="btn btn-outline btn-lg" onclick="showSection('courses')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                  Explore E-Courses
+                </button>
+                <button class="btn btn-secondary btn-lg" onclick="showSection('membership')">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                  Join as Member
+                </button>
+              </div>
+
+              <div class="hero-stats">
+                <div class="stat-item">
+                  <h3>15,000+</h3>
+                  <p>Patients Treated</p>
+                </div>
+                <div class="stat-item">
+                  <h3>4 Centers</h3>
+                  <p>Dedicated Facilities</p>
+                </div>
+                <div class="stat-item">
+                  <h3>1,200+</h3>
+                  <p>Certified Trainees</p>
+                </div>
+                <div class="stat-item">
+                  <h3>25+</h3>
+                  <p>Medical Specialists</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-visual">
+              <div class="hero-image-card">
+                <img id="heroDynamicImage" src="assets/images/foundation_hero.jpg" alt="Naresh Community Health Camp">
+                <div class="hero-floating-badge">
+                  <div class="floating-badge-icon">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                  <div>
+                    <strong style="color: var(--secondary); font-size: 0.95rem; display:block;">NABH Compliant Standard Protocols</strong>
+                    <span style="font-size: 0.78rem; color: var(--text-muted);">Verified Doctors & Certified Emergency Trainers</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 Institutions Overview Grid -->
+      <section class="section-alt" id="institutions">
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Institutional Network</span>
+            <h2>Four Pillars of Community Well-Being</h2>
+            <p>From rural free medical camps to modern smart e-clinics and 24/7 first aid trauma stations.</p>
+          </div>
+
+          <div class="grid-4" id="institutionsCardsContainer">
+            <!-- Rendered dynamically from data.js -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Featured Services & Key Programs -->
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-secondary">Comprehensive Services</span>
+            <h2>Delivering Impact Across Healthcare Verticals</h2>
+            <p>Our integrated programs bridge the gap between primary prevention, rapid trauma care, and livelihood empowerment.</p>
+          </div>
+
+          <div class="grid-3">
+            <div class="inst-card">
+              <div class="inst-card-icon" style="background:#fee2e2; color:#b91c1c;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/><path d="M12 5v8"/><path d="M9 9h6"/></svg>
+              </div>
+              <h3>Emergency First Aid & Trauma Care</h3>
+              <p>24-hour on-call wound care, burn treatment, limb immobilization, CPR response, and community training drives.</p>
+              <ul>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Automated External Defibrillator (AED) Ready</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Free Bleeding Control & Splinting Workshops</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Distribution of Certified School First Aid Kits</li>
+              </ul>
+              <button class="btn btn-outline btn-sm" onclick="filterInstitutionView('fac')">Learn More &rarr;</button>
+            </div>
+
+            <div class="inst-card">
+              <div class="inst-card-icon" style="background:#e0f2fe; color:#0369a1;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+              </div>
+              <h3>X-Press Smart e-Clinic</h3>
+              <p>Cutting edge point-of-care digital diagnostics, remote tele-consultation with leading super-specialists, and cloud vitals monitoring.</p>
+              <ul>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> 5-Minute Digital ECG & Vitals Screenings</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Paperless Cloud Prescriptions & WhatsApp Reports</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Diabetes & Blood Pressure Chronic Management</li>
+              </ul>
+              <button class="btn btn-outline btn-sm" onclick="filterInstitutionView('eclinic')">Explore e-Clinic &rarr;</button>
+            </div>
+
+            <div class="inst-card">
+              <div class="inst-card-icon" style="background:#dcfce7; color:#15803d;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              </div>
+              <h3>Vocational Skill Empowerment</h3>
+              <p>Accredited vocational certification programs empowering rural youth into certified nursing assistants, emergency responders, and caregivers.</p>
+              <ul>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Standardized MCQ Assessments & Quizzes</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Instant Verifiable PDF Certificates with QR</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Employment Assistance in Hospitals & Clinics</li>
+              </ul>
+              <button class="btn btn-outline btn-sm" onclick="showSection('courses')">View Courses &rarr;</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Quick Appointment / Quick Search Banner -->
+      <section class="section-alt">
+        <div class="container">
+          <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #fff; border-radius: var(--radius-xl); padding: 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 2rem;">
+            <div style="max-width: 600px;">
+              <span class="badge badge-primary" style="margin-bottom:0.8rem;">Fast-Track OPD Booking</span>
+              <h2 style="color:#ffffff; font-size:2rem; margin-bottom:0.75rem;">Need to Consult a Doctor?</h2>
+              <p style="color:#cbd5e1; font-size:1.05rem;">
+                Select your preferred clinic, doctor, and slot in under 2 minutes. Confirmation notifications sent immediately with tracking token.
+              </p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <button class="btn btn-primary btn-lg" onclick="showSection('booking')">
+                🗓️ Book Appointment Now
+              </button>
+              <button class="btn btn-outline btn-lg" style="color:#fff; border-color:#475569;" onclick="openTrackAppointmentModal()">
+                🔍 Track Booking Status
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- END HOME SECTION -->
+
+    <!-- INSTITUTIONS SECTION -->
+    <div id="section-institutions" class="page-view" style="display:none;">
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Dedicated Portals</span>
+            <h2 id="institutionDetailTitle">Our Four Institutions</h2>
+            <p id="institutionDetailSubtitle">Explore detailed profiles, operating hours, specialized services, and contact details for each organization.</p>
+          </div>
+
+          <div id="institutionDetailedContent">
+            <!-- Populated dynamically based on chosen tab -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- DOCTORS DIRECTORY SECTION -->
+    <div id="section-doctors" class="page-view" style="display:none;">
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Medical Panel</span>
+            <h2>Verified Doctors & Healthcare Specialists</h2>
+            <p>Our experienced team of physicians, surgeons, pediatricians, and women's health specialists are dedicated to compassionate community care.</p>
+          </div>
+
+          <!-- Doctor Filters -->
+          <div style="background: #ffffff; padding: 1.25rem 1.75rem; border-radius: var(--radius-lg); border: 1px solid var(--border-color); margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+            <div style="display:flex; gap: 1rem; flex-wrap: wrap; flex-grow:1;">
+              <select id="docFilterClinic" onchange="renderDoctorsList()" style="padding: 0.6rem 1rem; border-radius: var(--radius-sm); border:1px solid var(--border-color); min-width: 200px;">
+                <option value="all">All Clinics & Centers</option>
+                <option value="foundation">Naresh Foundation Camp</option>
+                <option value="eclinic">Naresh X-Press e-Clinic</option>
+                <option value="chc_fac">Community Health Center</option>
+                <option value="fac">Naresh First Aid Center</option>
+              </select>
+
+              <select id="docFilterSpecialty" onchange="renderDoctorsList()" style="padding: 0.6rem 1rem; border-radius: var(--radius-sm); border:1px solid var(--border-color); min-width: 200px;">
+                <option value="all">All Specialties</option>
+                <option value="General Medicine">General Medicine</option>
+                <option value="Women Health">Women Health & Gynecology</option>
+                <option value="Trauma">Trauma & Wound Care</option>
+                <option value="Pediatrics">Pediatrics & Child Care</option>
+                <option value="Orthopedics">Orthopedics</option>
+              </select>
+            </div>
+            <div>
+              <span id="docCountBadge" class="badge badge-secondary">Showing 5 Specialists</span>
+            </div>
+          </div>
+
+          <!-- Doctors Grid -->
+          <div class="grid-3" id="doctorsGridContainer">
+            <!-- Dynamic Render -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- BOOK APPOINTMENT WIZARD SECTION -->
+    <div id="section-booking" class="page-view" style="display:none;">
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Online Appointment</span>
+            <h2>Book an Outpatient Consultation</h2>
+            <p>Select your clinic, verified doctor, and preferred time slot. Requests are logged instantly and verified by clinic staff.</p>
+          </div>
+
+          <div class="appointment-wizard-card">
+            <!-- Steps Indicator -->
+            <div class="wizard-steps-header">
+              <div class="wizard-step-tab active" id="wizard-tab-1">
+                <span class="wizard-step-num">1</span>
+                <span>Clinic & Doctor</span>
+              </div>
+              <div class="wizard-step-tab" id="wizard-tab-2">
+                <span class="wizard-step-num">2</span>
+                <span>Date & Slot</span>
+              </div>
+              <div class="wizard-step-tab" id="wizard-tab-3">
+                <span class="wizard-step-num">3</span>
+                <span>Patient Details</span>
+              </div>
+            </div>
+
+            <!-- Wizard Step 1: Clinic & Doctor -->
+            <div class="wizard-body" id="wizard-step-1">
+              <h3 style="font-size:1.3rem; margin-bottom:1.25rem;">Step 1: Choose Clinic & Medical Specialist</h3>
+              <div class="form-group">
+                <label for="bookClinicSelect">Select Institution / Clinic *</label>
+                <select id="bookClinicSelect" onchange="updateBookingDoctorList()">
+                  <option value="eclinic">Naresh X-Press e-Clinic (Station Road)</option>
+                  <option value="chc_fac">Naresh Community Health Care Center & First Aid Center (Shanti Nagar)</option>
+                  <option value="fac">Naresh First Aid Center (Highway Industrial Hub)</option>
+                  <option value="foundation">Naresh Foundation Free Health Camp</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="bookDoctorSelect">Select Consulting Doctor *</label>
+                <select id="bookDoctorSelect" onchange="updateBookingSlots()">
+                  <!-- Dynamically populated -->
+                </select>
+              </div>
+
+              <div id="bookingDoctorPreview" style="background:var(--bg-subtle); padding:1.25rem; border-radius:var(--radius-md); border:1px solid var(--border-color); margin-top:1.5rem; display:flex; gap:1rem; align-items:center;">
+                <!-- Doctor summary will render here -->
+              </div>
+
+              <div style="display: flex; justify-content: flex-end; margin-top: 2rem;">
+                <button class="btn btn-primary btn-lg" onclick="goToBookingStep(2)">
+                  Continue to Select Slot &rarr;
+                </button>
+              </div>
+            </div>
+
+            <!-- Wizard Step 2: Date & Slot -->
+            <div class="wizard-body" id="wizard-step-2" style="display:none;">
+              <h3 style="font-size:1.3rem; margin-bottom:1.25rem;">Step 2: Select Consultation Date & Time Slot</h3>
+              
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="bookDate">Consultation Date *</label>
+                  <input type="date" id="bookDate" onchange="updateBookingSlots()">
+                </div>
+                <div class="form-group">
+                  <label>Consultation Mode</label>
+                  <select id="bookConsultMode">
+                    <option value="Physical Clinic Visit">Physical Walk-in OPD Consultation</option>
+                    <option value="Tele-Consultation">Tele-Consultation / WhatsApp Video Call</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Available Consultation Slots *</label>
+                <div class="time-slots-grid" id="bookingSlotsContainer">
+                  <!-- Slots will render here -->
+                </div>
+                <input type="hidden" id="selectedTimeSlot" value="">
+              </div>
+
+              <div style="display:flex; justify-content:space-between; margin-top:2rem;">
+                <button class="btn btn-outline" onclick="goToBookingStep(1)">&larr; Back</button>
+                <button class="btn btn-primary btn-lg" onclick="goToBookingStep(3)">Continue to Patient Details &rarr;</button>
+              </div>
+            </div>
+
+            <!-- Wizard Step 3: Patient Details -->
+            <div class="wizard-body" id="wizard-step-3" style="display:none;">
+              <h3 style="font-size:1.3rem; margin-bottom:1.25rem;">Step 3: Patient Information</h3>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="patientName">Patient Full Name *</label>
+                  <input type="text" id="patientName" placeholder="e.g. Ramesh Chand" required>
+                </div>
+                <div class="form-group">
+                  <label for="patientPhone">Mobile Number (for SMS/WhatsApp Confirmation) *</label>
+                  <input type="tel" id="patientPhone" placeholder="e.g. 98112 34567" required>
+                </div>
+              </div>
+
+              <div class="form-grid-2">
+                <div class="form-group">
+                  <label for="patientEmail">Email Address (Optional)</label>
+                  <input type="email" id="patientEmail" placeholder="patient@example.com">
+                </div>
+                <div class="form-group">
+                  <label for="patientGender">Gender & Age</label>
+                  <div style="display:flex; gap:0.5rem;">
+                    <select id="patientGender" style="width:50%;">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                    <input type="number" id="patientAge" placeholder="Age" style="width:50%;">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="patientReason">Reason for Visit / Primary Symptoms *</label>
+                <textarea id="patientReason" rows="3" placeholder="Briefly describe your symptoms (e.g. blood pressure follow-up, knee pain, fever). Note: For critical emergencies, call 108/112."></textarea>
+              </div>
+
+              <div style="background:var(--bg-subtle); padding:1rem; border-radius:var(--radius-sm); font-size:0.82rem; color:var(--text-muted); margin-bottom:1.5rem;">
+                ⚠️ <strong>Booking Disclaimer:</strong> Submitting this form creates an official appointment request. Your booking will be confirmed by clinic receptionist staff via SMS/Phone call.
+              </div>
+
+              <div style="display:flex; justify-content:space-between;">
+                <button class="btn btn-outline" onclick="goToBookingStep(2)">&larr; Back</button>
+                <button class="btn btn-primary btn-lg" onclick="submitAppointmentBooking()">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  Confirm Appointment Request
+                </button>
+              </div>
+            </div>
+
+            <!-- Booking Success Confirmation Screen -->
+            <div class="wizard-body" id="wizard-success-screen" style="display:none; text-align:center; padding:3.5rem 2rem;">
+              <div style="width:72px; height:72px; border-radius:50%; background:var(--success-light); color:var(--success); display:flex; align-items:center; justify-content:center; margin:0 auto 1.5rem;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h2 style="font-size:1.85rem; color:var(--secondary); margin-bottom:0.5rem;">Appointment Request Submitted!</h2>
+              <p style="max-width:550px; margin:0 auto 1.5rem;">
+                Your appointment reference token is: <strong id="successBookingToken" style="color:var(--primary); font-size:1.25rem;">APT-2026-105</strong>
+              </p>
+              
+              <div id="bookingSummaryCard" style="background:var(--bg-subtle); border:1px solid var(--border-color); border-radius:var(--radius-lg); padding:1.5rem; max-width:500px; margin:0 auto 2rem; text-align:left;">
+                <!-- Summary inserted here -->
+              </div>
+
+              <div style="display:flex; justify-content:center; gap:1rem;">
+                <button class="btn btn-primary" onclick="window.print()">🖨️ Print Appointment Slip</button>
+                <button class="btn btn-outline" onclick="resetBookingWizard()">Book Another Appointment</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ONLINE COURSES & E-LEARNING SECTION -->
+    <div id="section-courses" class="page-view" style="display:none;">
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">E-Learning & Vocational Skills</span>
+            <h2>Certified Health & First Aid Academy</h2>
+            <p>Empowering students and community volunteers with certified self-paced interactive modules, MCQ exams, and verifiable course completion certificates.</p>
+          </div>
+
+          <!-- Course Category Filters -->
+          <div style="display:flex; justify-content:center; gap:0.75rem; margin-bottom:2.5rem; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-primary" onclick="filterCoursesCategory('all', this)">All Courses</button>
+            <button class="btn btn-sm btn-outline" onclick="filterCoursesCategory('First Aid & Emergency', this)">First Aid & Emergency</button>
+            <button class="btn btn-sm btn-outline" onclick="filterCoursesCategory('Healthcare Skill', this)">Healthcare Skills & Nursing</button>
+            <button class="btn btn-sm btn-outline" onclick="filterCoursesCategory('Public Health', this)">Public Health & Nutrition</button>
+          </div>
+
+          <!-- Courses Grid -->
+          <div class="grid-3" id="coursesGridContainer">
+            <!-- Dynamic courses rendered here -->
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- MEMBERSHIP SECTION -->
+    <div id="section-membership" class="page-view" style="display:none;">
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Foundation Membership</span>
+            <h2>Join Our Community Health Movement</h2>
+            <p>Become a registered volunteer, skill trainer, or patron member of Naresh Community Health Care & Skill Empowerment India Foundation.</p>
+          </div>
+
+          <div class="grid-2" style="align-items:start;">
+            <!-- Membership Form -->
+            <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:2.5rem; box-shadow:var(--shadow-md);">
+              <h3 style="font-size:1.35rem; margin-bottom:1rem;">Membership Application Form</h3>
+              <p style="font-size:0.88rem; margin-bottom:1.5rem;">Fill out this application to receive your official digital membership credential upon review.</p>
+
+              <form id="membershipForm" onsubmit="handleMembershipSubmit(event)">
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label>Full Name *</label>
+                    <input type="text" id="mbrName" placeholder="e.g. Sandeep Kumar" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Mobile Number *</label>
+                    <input type="tel" id="mbrPhone" placeholder="e.g. +91 98765 43210" required>
+                  </div>
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label>Email Address *</label>
+                    <input type="email" id="mbrEmail" placeholder="name@domain.com" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Membership Category *</label>
+                    <select id="mbrCategory" onchange="updateLiveIdCardPreview()">
+                      <option value="Health Volunteer">Health Volunteer (Village Outreach)</option>
+                      <option value="Skill Trainer">Certified Skill Trainer</option>
+                      <option value="General Member">General Community Member</option>
+                      <option value="Patron Member">Patron & Supporter</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label>Blood Group</label>
+                    <select id="mbrBloodGroup" onchange="updateLiveIdCardPreview()">
+                      <option value="O+">O Positive (O+)</option>
+                      <option value="O-">O Negative (O-)</option>
+                      <option value="A+">A Positive (A+)</option>
+                      <option value="A-">A Negative (A-)</option>
+                      <option value="B+">B Positive (B+)</option>
+                      <option value="B-">B Negative (B-)</option>
+                      <option value="AB+">AB Positive (AB+)</option>
+                      <option value="AB-">AB Negative (AB-)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label>Gender</label>
+                    <select id="mbrGender">
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Residential Address & District *</label>
+                  <textarea id="mbrAddress" rows="2" placeholder="Street, Village/Town, District, Pin Code" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                  Submit Application & Generate ID Card Preview
+                </button>
+              </form>
+            </div>
+
+            <!-- Live Membership ID Card Preview -->
+            <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:2.5rem; box-shadow:var(--shadow-md); text-align:center;">
+              <span class="badge badge-secondary" style="margin-bottom:0.75rem;">Instant ID Card Template</span>
+              <h3 style="font-size:1.25rem; margin-bottom:0.5rem;">Foundation Official ID Preview</h3>
+              <p style="font-size:0.85rem; margin-bottom:1.5rem;">This official photo ID is verified and activated once approved by foundation administrative staff.</p>
+
+              <div class="id-card-preview-container">
+                <div class="member-id-card" id="previewMemberCard">
+                  <div class="id-card-header">
+                    <div style="width:32px; height:32px; border-radius:6px; background:#fff; color:var(--primary); display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem;">
+                      NCH
+                    </div>
+                    <div style="text-align:left;">
+                      <h4 style="font-size:0.75rem;">NARESH COMMUNITY HEALTH FOUNDATION</h4>
+                      <span style="font-size:0.65rem; color:#f0fdfa;">Govt. Reg. Non-Profit Society</span>
+                    </div>
+                  </div>
+
+                  <div class="id-card-body">
+                    <div class="id-card-avatar">
+                      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                      <span style="font-size:0.65rem; margin-top:4px;">VERIFIED MEMBER</span>
+                    </div>
+                    <div class="id-card-details" style="text-align:left;">
+                      <h3 id="cardPreviewName">Sandeep Kumar</h3>
+                      <span class="category-tag" id="cardPreviewCategory">Health Volunteer</span>
+                      
+                      <div class="id-card-field">
+                        <span>ID No: </span><strong id="cardPreviewId">NCH-MBR-2026-501</strong>
+                      </div>
+                      <div class="id-card-field">
+                        <span>Blood Group: </span><strong id="cardPreviewBlood">O+</strong>
+                      </div>
+                      <div class="id-card-field">
+                        <span>Valid Thru: </span><strong>31 Dec 2028</strong>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="id-card-footer">
+                    <span>Authorized Signatory</span>
+                    <span style="color:#2dd4bf;">Active Member</span>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top:1.5rem;">
+                <button class="btn btn-outline btn-sm" onclick="printElement('previewMemberCard')">
+                  🖨️ Print / Download ID Card
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CONTACT & LOCATIONS SECTION -->
+    <div id="section-contact" class="page-view" style="display:none;">
+      <section>
+        <div class="container">
+          <div class="section-header">
+            <span class="badge badge-primary">Get In Touch</span>
+            <h2>Centers & Contact Information</h2>
+            <p>Visit any of our 4 centers across the district or send an online enquiry to our administration team.</p>
+          </div>
+
+          <div class="grid-2" style="align-items:start;">
+            <!-- Contact Details of the 4 institutions -->
+            <div>
+              <div style="display:flex; flex-direction:column; gap:1.25rem;">
+                <div class="inst-card">
+                  <span class="badge badge-primary" style="width:fit-content; margin-bottom:0.5rem;">Headquarters</span>
+                  <h3>Naresh Community Health Care & Skill Empowerment India Foundation</h3>
+                  <p>Civil Lines Road, Near Medical College, UP - 202001</p>
+                  <div style="font-size:0.85rem; color:var(--text-muted); display:flex; flex-direction:column; gap:0.25rem;">
+                    <span>📞 Phone: +91 98765 43210</span>
+                    <span>✉️ Email: foundation@nareshhealthcare.org</span>
+                  </div>
+                </div>
+
+                <div class="inst-card">
+                  <span class="badge badge-primary" style="width:fit-content; margin-bottom:0.5rem;">Digital OPD</span>
+                  <h3>Naresh X-Press e-Clinic</h3>
+                  <p>Shop 12-14, Ground Floor, Vikas Complex, Station Road, UP - 202001</p>
+                  <div style="font-size:0.85rem; color:var(--text-muted); display:flex; flex-direction:column; gap:0.25rem;">
+                    <span>📞 Phone: +91 98765 43211</span>
+                    <span>⏰ Hours: Mon-Sat 08:30 AM – 08:00 PM</span>
+                  </div>
+                </div>
+
+                <div class="inst-card">
+                  <span class="badge badge-danger" style="width:fit-content; margin-bottom:0.5rem;">24/7 First Aid Post</span>
+                  <h3>Naresh First Aid Center</h3>
+                  <p>Main Highway Hub, Near Toll Plaza, Industrial Corridor, UP - 202003</p>
+                  <div style="font-size:0.85rem; color:var(--text-muted); display:flex; flex-direction:column; gap:0.25rem;">
+                    <span>📞 Emergency First Aid Hotline: +91 98765 43213</span>
+                    <span>⏰ Open 24 Hours for Trauma & Emergency Stabilization</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Inquiry Form -->
+            <div style="background:#ffffff; border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:2.5rem; box-shadow:var(--shadow-md);">
+              <h3 style="font-size:1.35rem; margin-bottom:1rem;">Send an Online Enquiry</h3>
+              <p style="font-size:0.88rem; margin-bottom:1.5rem;">Questions regarding health camps, student admissions, or clinic timings? Write to us.</p>
+
+              <form id="contactForm" onsubmit="handleContactSubmit(event)">
+                <div class="form-group">
+                  <label>Your Full Name *</label>
+                  <input type="text" id="contactName" placeholder="e.g. Dr. Ramesh Gupta" required>
+                </div>
+                <div class="form-grid-2">
+                  <div class="form-group">
+                    <label>Phone Number *</label>
+                    <input type="tel" id="contactPhone" placeholder="e.g. +91 98765 00000" required>
+                  </div>
+                  <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="contactEmail" placeholder="yourname@gmail.com">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>Select Institution of Concern</label>
+                  <select id="contactCenter">
+                    <option value="Naresh Community Health Care & Skill Empowerment India Foundation">Naresh Foundation (General / Health Camp)</option>
+                    <option value="Naresh X-Press e-Clinic">Naresh X-Press e-Clinic</option>
+                    <option value="Naresh Community Health Care Center & First Aid Center">Community Health Center</option>
+                    <option value="Naresh First Aid Center">Naresh First Aid Center</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label>Message / Details *</label>
+                  <textarea id="contactMessage" rows="4" placeholder="How can we assist you?" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" style="width:100%;">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- ==================== MODALS ==================== -->
+
+  <!-- Interactive Lesson & Quiz Player Modal -->
+  <div class="modal-overlay" id="coursePlayerModal">
+    <div class="modal-dialog" style="max-width:850px;">
+      <div class="modal-header">
+        <div>
+          <span class="badge badge-primary" id="playerModalCategory">First Aid Course</span>
+          <h3 id="playerModalTitle" style="margin-top:4px;">Emergency CPR & First Aid Responder</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('coursePlayerModal')">&times;</button>
+      </div>
+
+      <div class="modal-body" style="padding:1.75rem 2rem;">
+        <!-- Tab Switcher between Lessons & Final Quiz -->
+        <div style="display:flex; gap:1rem; border-bottom:1px solid var(--border-color); margin-bottom:1.5rem;">
+          <button class="btn btn-sm btn-outline active" id="btnTabLessons" onclick="switchPlayerTab('lessons')">📖 Lesson Modules</button>
+          <button class="btn btn-sm btn-outline" id="btnTabQuiz" onclick="switchPlayerTab('quiz')">✍️ Final Certification Quiz</button>
+        </div>
+
+        <!-- Lessons Tab -->
+        <div id="playerTabLessons">
+          <div style="background:#0f172a; border-radius:var(--radius-lg); height:280px; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; margin-bottom:1.5rem; position:relative; overflow:hidden;">
+            <img src="assets/images/firstaid_training.jpg" style="position:absolute; width:100%; height:100%; object-fit:cover; opacity:0.35;" alt="Training Session">
+            <div style="position:relative; z-index:2; text-align:center; padding:1.5rem;">
+              <div style="width:64px; height:64px; border-radius:50%; background:rgba(255,255,255,0.2); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; cursor:pointer;" onclick="playSimulatedLesson()">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              </div>
+              <h4 id="currentLessonVideoTitle">Module 1: Principles of First Aid & Scene Safety</h4>
+              <p style="color:#cbd5e1; font-size:0.85rem;">Official Video Lecture & Demonstrations by Dr. Rajesh Verma</p>
+            </div>
+          </div>
+
+          <h4 style="font-size:1.1rem; margin-bottom:0.75rem;">Course Curriculum</h4>
+          <div id="playerSyllabusList" style="display:flex; flex-direction:column; gap:0.5rem;">
+            <!-- Lessons List rendered dynamically -->
+          </div>
+
+          <div style="margin-top:2rem; text-align:right;">
+            <button class="btn btn-primary" onclick="switchPlayerTab('quiz')">
+              Proceed to Certification Quiz &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Tab -->
+        <div id="playerTabQuiz" style="display:none;">
+          <div style="background:var(--primary-light); padding:1rem 1.25rem; border-radius:var(--radius-md); margin-bottom:1.5rem;">
+            <strong style="color:var(--primary-dark);">📝 Certification Assessment Instructions:</strong>
+            <p style="font-size:0.85rem; color:#0f766e; margin-top:0.25rem;">
+              Answer all multiple-choice questions. Score 80% or higher to unlock and download your official <strong>Naresh Foundation Certificate of Completion</strong>.
+            </p>
+          </div>
+
+          <div id="quizQuestionsContainer">
+            <!-- Questions rendered here -->
+          </div>
+
+          <div id="quizResultBox" style="display:none; text-align:center; padding:2rem; background:var(--bg-subtle); border-radius:var(--radius-lg); margin-top:1.5rem;">
+            <!-- Quiz results rendered here -->
+          </div>
+
+          <div style="margin-top:2rem; display:flex; justify-content:space-between;" id="quizActionButtons">
+            <button class="btn btn-outline" onclick="switchPlayerTab('lessons')">&larr; Back to Lessons</button>
+            <button class="btn btn-primary" onclick="submitCourseQuiz()">Submit Quiz for Evaluation</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate Viewer & Print Modal -->
+  <div class="modal-overlay" id="certificateModal">
+    <div class="modal-dialog" style="max-width:880px;">
+      <div class="modal-header">
+        <h3>Verified Course Certificate</h3>
+        <button class="modal-close-btn" onclick="closeModal('certificateModal')">&times;</button>
+      </div>
+      <div class="modal-body" style="background:#f8fafc; padding:2rem;">
+        <div id="printableCertificate">
+          <div class="certificate-preview-box">
+            <div class="cert-emblem">⚕️</div>
+            <div style="font-size:0.8rem; font-weight:700; color:#0f766e; letter-spacing:1px; text-transform:uppercase;">
+              Naresh Community Health Care & Skill Empowerment India Foundation
+            </div>
+            <h2 class="cert-title">Certificate of Completion</h2>
+            <div class="cert-sub">This is to proudly certify that</div>
+            <div class="cert-recipient" id="certRecipientName">Rahul Sharma</div>
+            <p style="font-size:0.95rem; color:var(--text-muted); max-width:600px; margin:0 auto 0.75rem;">
+              has successfully undergone comprehensive curriculum training and passed the practical assessment for
+            </p>
+            <div class="cert-course" id="certCourseTitle">Certified Emergency First Aid & CPR Responder</div>
+            
+            <div style="font-size:0.8rem; color:#64748b; margin-bottom:1.5rem;">
+              Certificate ID: <strong id="certIdNumber">NCH-CERT-2026-7842</strong> | Issue Date: <strong id="certIssueDate">17 October 2026</strong>
+            </div>
+
+            <div class="cert-signatures">
+              <div class="cert-sig-block">
+                <div class="cert-sig-line"></div>
+                <strong style="display:block; font-size:0.85rem;">Dr. Arvind Naresh</strong>
+                <span style="font-size:0.75rem; color:#64748b;">Chief Medical Director</span>
+              </div>
+              <div class="cert-sig-block">
+                <div style="width:50px; height:50px; border-radius:50%; border:2px dashed var(--primary); display:flex; align-items:center; justify-content:center; font-size:0.65rem; color:var(--primary); font-weight:800; margin:0 auto;">
+                  SEAL
+                </div>
+                <span style="font-size:0.75rem; color:#64748b;">Official Seal</span>
+              </div>
+              <div class="cert-sig-block">
+                <div class="cert-sig-line"></div>
+                <strong style="display:block; font-size:0.85rem;">Dr. Rajesh Verma</strong>
+                <span style="font-size:0.75rem; color:#64748b;">Director of First Aid Training</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('certificateModal')">Close</button>
+        <button class="btn btn-primary" onclick="printElement('printableCertificate')">🖨️ Download / Print Certificate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donation Modal -->
+  <div class="modal-overlay" id="donationModal">
+    <div class="modal-dialog" style="max-width:550px;">
+      <div class="modal-header">
+        <div>
+          <span class="badge badge-success">Tax Exemption 80G</span>
+          <h3 style="margin-top:4px;">Support Our Health Mission</h3>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('donationModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.88rem; margin-bottom:1.5rem;">
+          Your tax-deductible contribution provides essential medicines, free health camps, and first aid kits to underserved communities.
+        </p>
+
+        <div style="margin-bottom:1.5rem;">
+          <label style="font-weight:600; font-size:0.88rem; display:block; margin-bottom:0.5rem;">Select Contribution Amount</label>
+          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:0.5rem; margin-bottom:0.75rem;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="setDonationAmount(500, this)">₹500</button>
+            <button type="button" class="btn btn-outline btn-sm active" onclick="setDonationAmount(1100, this)">₹1,100</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="setDonationAmount(2500, this)">₹2,500</button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="setDonationAmount(5000, this)">₹5,000</button>
+          </div>
+          <input type="number" id="customDonationAmount" placeholder="Or enter custom amount in ₹" style="width:100%; padding:0.65rem 1rem; border:1px solid var(--border-color); border-radius:var(--radius-sm);" value="1100">
+        </div>
+
+        <div class="form-group">
+          <label>Designated Cause</label>
+          <select id="donationCause">
+            <option value="Free Rural Health Camp & Medicine Distribution">Free Rural Health Camp & Medicine Distribution</option>
+            <option value="Emergency First Aid Equipment for Schools">Emergency First Aid Equipment for Schools</option>
+            <option value="Sanjeevani Youth Skill Training Sponsorship">Sanjeevani Youth Skill Training Sponsorship</option>
+            <option value="General Healthcare Emergency Fund">General Healthcare Emergency Fund</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Donor Full Name *</label>
+          <input type="text" id="donorName" placeholder="e.g. Vikas Aggarwal" required>
+        </div>
+
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Mobile Number *</label>
+            <input type="tel" id="donorPhone" placeholder="e.g. 98101 23456" required>
+          </div>
+          <div class="form-group">
+            <label>Email (for 80G Receipt) *</label>
+            <input type="email" id="donorEmail" placeholder="donor@example.com" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>PAN Card (Optional, for 80G Tax Exemption)</label>
+          <input type="text" id="donorPan" placeholder="ABCDE1234F" style="text-transform:uppercase;">
+        </div>
+
+        <div style="background:var(--bg-subtle); padding:0.75rem; border-radius:var(--radius-sm); font-size:0.75rem; color:var(--text-muted); margin-bottom:1.5rem;">
+          🔒 Secure 256-bit payment gateway simulation. Instant receipt generated with foundation registration numbers.
+        </div>
+
+        <button class="btn btn-primary btn-lg" style="width:100%;" onclick="processDonation()">
+          Proceed to Pay & Generate Receipt
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Donation Receipt View Modal -->
+  <div class="modal-overlay" id="donationReceiptModal">
+    <div class="modal-dialog" style="max-width:650px;">
+      <div class="modal-header">
+        <h3>Donation Acknowledgement & Receipt</h3>
+        <button class="modal-close-btn" onclick="closeModal('donationReceiptModal')">&times;</button>
+      </div>
+      <div class="modal-body" id="printableReceiptArea">
+        <div style="border:2px solid var(--border-color); border-radius:var(--radius-md); padding:2rem; background:#fff;">
+          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid var(--primary); padding-bottom:1rem; margin-bottom:1.5rem;">
+            <div>
+              <h3 style="font-size:1.15rem; color:var(--primary-dark);">NARESH COMMUNITY HEALTH FOUNDATION</h3>
+              <p style="font-size:0.75rem; color:var(--text-muted);">Registered under Societies Registration Act | 80G Certified</p>
+            </div>
+            <div style="text-align:right;">
+              <span class="badge badge-success">PAYMENT COMPLETED</span>
+              <div style="font-size:0.75rem; margin-top:4px;" id="receiptNumberText">Receipt: REC-NCH-2026-092</div>
+            </div>
+          </div>
+
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; font-size:0.85rem; margin-bottom:1.5rem;">
+            <div><strong>Donor Name:</strong> <span id="receiptDonorName">Vikas Aggarwal</span></div>
+            <div><strong>Date:</strong> <span id="receiptDate">17 Oct 2026</span></div>
+            <div><strong>Mobile:</strong> <span id="receiptPhone">+91 98101 23456</span></div>
+            <div><strong>Email:</strong> <span id="receiptEmail">donor@example.com</span></div>
+            <div><strong>PAN:</strong> <span id="receiptPan">ABCDE1234F</span></div>
+            <div><strong>Payment Mode:</strong> <span>UPI / Instant Gateway</span></div>
+          </div>
+
+          <div style="background:var(--bg-subtle); padding:1rem; border-radius:var(--radius-sm); margin-bottom:1.5rem;">
+            <div style="display:flex; justify-content:space-between; font-weight:700; font-size:1.1rem; color:var(--secondary);">
+              <span>Amount Donated:</span>
+              <span id="receiptAmount">₹1,100</span>
+            </div>
+            <div style="font-size:0.8rem; color:var(--text-muted); margin-top:0.25rem;">
+              Purpose: <span id="receiptCause">Free Rural Health Camp & Medicine Distribution</span>
+            </div>
+          </div>
+
+          <div style="font-size:0.75rem; color:#64748b; text-align:center;">
+            Thank you for your generous support towards community wellness and healthcare empowerment.
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('donationReceiptModal')">Close</button>
+        <button class="btn btn-primary" onclick="printElement('printableReceiptArea')">🖨️ Print Receipt</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Track Appointment Modal -->
+  <div class="modal-overlay" id="trackAppointmentModal">
+    <div class="modal-dialog" style="max-width:550px;">
+      <div class="modal-header">
+        <h3>Track Appointment Status</h3>
+        <button class="modal-close-btn" onclick="closeModal('trackAppointmentModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.88rem; margin-bottom:1rem;">Enter your booking reference token (e.g. <code>APT-2026-101</code>) or your mobile number.</p>
+        <div style="display:flex; gap:0.5rem; margin-bottom:1.5rem;">
+          <input type="text" id="trackQueryInput" placeholder="Appointment ID or Mobile No." style="flex-grow:1; padding:0.65rem 1rem; border:1px solid var(--border-color); border-radius:var(--radius-sm);">
+          <button class="btn btn-primary" onclick="searchAppointmentStatus()">Check Status</button>
+        </div>
+
+        <div id="trackResultContainer" style="display:none;">
+          <!-- Result rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Student Portal Modal -->
+  <div class="modal-overlay" id="studentPortalModal">
+    <div class="modal-dialog" style="max-width:700px;">
+      <div class="modal-header">
+        <div style="display:flex; align-items:center; gap:0.75rem;">
+          <div style="width:40px; height:40px; border-radius:50%; background:var(--primary-light); color:var(--primary); display:flex; align-items:center; justify-content:center; font-weight:800;">
+            RS
+          </div>
+          <div>
+            <h3>Rahul Sharma</h3>
+            <span style="font-size:0.78rem; color:var(--text-muted);">Enrolled Student ID: STU-2026-441</span>
+          </div>
+        </div>
+        <button class="modal-close-btn" onclick="closeModal('studentPortalModal')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <h4 style="font-size:1.1rem; margin-bottom:1rem;">My Enrolled Courses & Progress</h4>
+        
+        <div id="studentCoursesList">
+          <!-- Populated from data.js -->
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal('studentPortalModal')">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Unified Role-Based Admin Dashboard Modal / View -->
+  <div class="modal-overlay" id="adminModal">
+    <div class="modal-dialog" style="max-width:1150px; width:95vw;">
+      <div class="admin-shell">
+        <div class="admin-header">
+          <div style="display:flex; align-items:center; gap:1rem;">
+            <div style="font-size:1.4rem;">⚙️</div>
+            <div>
+              <h3 style="color:#ffffff; font-size:1.2rem;">Naresh Unified Admin Dashboard</h3>
+              <span style="font-size:0.75rem; color:#94a3b8;">Role: Super Admin | Full Operations Control</span>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.5rem; align-items:center;">
+            <select id="adminRoleSelector" onchange="handleAdminRoleSwitch(this.value)" style="padding:0.4rem 0.75rem; font-size:0.8rem; border-radius:var(--radius-sm); background:#334155; color:#fff; border:1px solid #475569;">
+              <option value="super_admin">Role: Super Admin</option>
+              <option value="clinic_admin">Role: Clinic Receptionist / Admin</option>
+              <option value="foundation_admin">Role: Foundation Admin</option>
+            </select>
+            <button class="modal-close-btn" style="color:#fff;" onclick="closeModal('adminModal')">&times;</button>
+          </div>
+        </div>
+
+        <!-- Admin Tabs -->
+        <div class="admin-tabs-nav">
+          <button class="admin-tab-btn active" onclick="switchAdminTab('overview', this)">📊 Operational Overview</button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('appointments', this)">📅 Appointments (<span id="adminAptCount">4</span>)</button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('members', this)">🪪 Member Approvals (<span id="adminMbrCount">4</span>)</button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('donations', this)">💰 Donations & 80G (<span id="adminDonCount">3</span>)</button>
+          <button class="admin-tab-btn" onclick="switchAdminTab('enquiries', this)">💬 Inquiries (<span id="adminEnqCount">2</span>)</button>
+        </div>
+
+        <div class="admin-content">
+          <!-- TAB 1: OVERVIEW -->
+          <div id="adminTab-overview">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-card-info">
+                  <h4>Total Appointments</h4>
+                  <div class="number" id="dashTotalApt">4</div>
+                </div>
+                <div class="stat-card-icon">📅</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-info">
+                  <h4>Active Members</h4>
+                  <div class="number" id="dashActiveMbr">2</div>
+                </div>
+                <div class="stat-card-icon" style="background:#fef3c7; color:#d97706;">🪪</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-info">
+                  <h4>Donations Raised</h4>
+                  <div class="number" id="dashTotalDonations">₹18,500</div>
+                </div>
+                <div class="stat-card-icon" style="background:#d1fae5; color:#059669;">💰</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-card-info">
+                  <h4>Pending Inquiries</h4>
+                  <div class="number" id="dashPendingEnquiries">1</div>
+                </div>
+                <div class="stat-card-icon" style="background:#fee2e2; color:#dc2626;">💬</div>
+              </div>
+            </div>
+
+            <div style="background:#ffffff; border-radius:var(--radius-lg); border:1px solid var(--border-color); padding:1.5rem; margin-bottom:1.5rem;">
+              <h4 style="margin-bottom:1rem;">Quick Administrative Tools</h4>
+              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+                <button class="btn btn-outline btn-sm" onclick="exportDataCSV('appointments')">📥 Export Appointments CSV</button>
+                <button class="btn btn-outline btn-sm" onclick="exportDataCSV('members')">📥 Export Members CSV</button>
+                <button class="btn btn-outline btn-sm" onclick="exportDataCSV('donations')">📥 Export Donations CSV</button>
+                <button class="btn btn-outline btn-sm" onclick="resetDemoData()">🔄 Reset Mock Database</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: APPOINTMENTS -->
+          <div id="adminTab-appointments" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:1rem;">
+              <div style="display:flex; gap:0.5rem;">
+                <select id="adminAptFilter" onchange="renderAdminAppointments()" style="padding:0.4rem 0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+                  <option value="all">All Statuses</option>
+                  <option value="Requested">Requested</option>
+                  <option value="Confirmed">Confirmed</option>
+                  <option value="Completed">Completed</option>
+                  <option value="Cancelled">Cancelled</option>
+                </select>
+              </div>
+              <button class="btn btn-sm btn-outline" onclick="exportDataCSV('appointments')">📥 Export CSV</button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table" id="adminAppointmentsTable">
+                <thead>
+                  <tr>
+                    <th>Token ID</th>
+                    <th>Patient Details</th>
+                    <th>Clinic / Center</th>
+                    <th>Doctor</th>
+                    <th>Date & Slot</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminAppointmentsTbody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 3: MEMBERS -->
+          <div id="adminTab-members" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:1rem;">
+              <div style="display:flex; gap:0.5rem;">
+                <select id="adminMbrFilter" onchange="renderAdminMembers()" style="padding:0.4rem 0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
+                  <option value="all">All Memberships</option>
+                  <option value="New">New Applications</option>
+                  <option value="Under Review">Under Review</option>
+                  <option value="Approved">Approved</option>
+                  <option value="Rejected">Rejected</option>
+                </select>
+              </div>
+              <button class="btn btn-sm btn-outline" onclick="exportDataCSV('members')">📥 Export CSV</button>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Member ID</th>
+                    <th>Applicant Name</th>
+                    <th>Contact</th>
+                    <th>Category</th>
+                    <th>Blood Group</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminMembersTbody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 4: DONATIONS -->
+          <div id="adminTab-donations" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h4>Donation Transactions & Receipts</h4>
+              <button class="btn btn-sm btn-outline" onclick="exportDataCSV('donations')">📥 Export CSV</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Receipt No</th>
+                    <th>Donor Name</th>
+                    <th>Amount</th>
+                    <th>Cause</th>
+                    <th>Payment Mode</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="adminDonationsTbody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- TAB 5: ENQUIRIES -->
+          <div id="adminTab-enquiries" style="display:none;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+              <h4>Public Inquiries & Camp Requests</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Sender</th>
+                    <th>Center of Interest</th>
+                    <th>Subject & Message</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="adminEnquiriesTbody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Footer -->
+  <footer class="main-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 style="display:flex; align-items:center; gap:0.5rem;">
+            <span>NARESH ALL-IN-ONE PLATFORM</span>
+          </h4>
+          <p style="font-size:0.88rem; line-height:1.6; margin-bottom:1rem; color:#94a3b8;">
+            A unified health, emergency care, and vocational training initiative uniting 4 institutions under the visionary stewardship of Naresh Community Health Care & Skill Empowerment India Foundation.
+          </p>
+          <div style="font-size:0.82rem; color:#64748b;">
+            Registration: Certified Non-Profit Society | 80G Tax-Deductible
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Four Institutions</h4>
+          <ul>
+            <li><a href="javascript:void(0)" onclick="filterInstitutionView('foundation')">Naresh Foundation</a></li>
+            <li><a href="javascript:void(0)" onclick="filterInstitutionView('eclinic')">Naresh X-Press e-Clinic</a></li>
+            <li><a href="javascript:void(0)" onclick="filterInstitutionView('chc_fac')">Community Health Center</a></li>
+            <li><a href="javascript:void(0)" onclick="filterInstitutionView('fac')">Naresh First Aid Center</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="javascript:void(0)" onclick="showSection('booking')">Book Outpatient Consultation</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('courses')">E-Learning & Certifications</a></li>
+            <li><a href="javascript:void(0)" onclick="showSection('membership')">Foundation Membership</a></li>
+            <li><a href="javascript:void(0)" onclick="openDonationModal()">Donate & Support</a></li>
+            <li><a href="javascript:void(0)" onclick="openTrackAppointmentModal()">Track Appointment Status</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>Emergency Contacts</h4>
+          <p style="font-size:0.85rem; color:#cbd5e1; margin-bottom:0.5rem;">
+            🚨 <strong>24/7 First Aid Center:</strong><br>
+            +91 98765 43213
+          </p>
+          <p style="font-size:0.85rem; color:#cbd5e1; margin-bottom:0.5rem;">
+            🏥 <strong>Foundation Office:</strong><br>
+            +91 98765 43210
+          </p>
+          <div style="margin-top:1rem;">
+            <a href="https://wa.me/919876543210" target="_blank" class="btn btn-sm btn-whatsapp">
+              WhatsApp Support
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Naresh Community Health Care & Skill Empowerment India Foundation. All Rights Reserved.
+        </div>
+        <div style="display:flex; gap:1.5rem;">
+          <a href="javascript:void(0)" onclick="alert('Privacy Policy: All personal patient and member data is protected and not sold.')">Privacy Policy</a>
+          <a href="javascript:void(0)" onclick="alert('Terms of Service: Medical disclaimer applies. Informational and appointment requesting platform.')">Terms of Service</a>
+          <a href="javascript:void(0)" onclick="alert('Medical Disclaimer: Not a substitute for physical emergency rooms or hospital ICU admissions.')">Medical Disclaimer</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
