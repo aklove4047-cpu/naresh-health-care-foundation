@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function initApp() {
+  applySiteSettings();
   renderInstitutionsOverview();
   renderDoctorsList();
   renderCoursesList();
@@ -15,6 +16,20 @@ function initApp() {
   initBookingDate();
   updateLiveIdCardPreview();
   renderStudentPortalCourses();
+}
+
+function applySiteSettings() {
+  const settings = NareshData.get("siteSettings");
+  if (settings) {
+    if (settings.emergencyNotice) {
+      const noticeEl = document.getElementById("topbarNoticeText");
+      if (noticeEl) noticeEl.innerHTML = settings.emergencyNotice;
+    }
+    if (settings.helplinePhone) {
+      const phoneEl = document.getElementById("topbarHelplineText");
+      if (phoneEl) phoneEl.innerText = settings.helplinePhone;
+    }
+  }
 }
 
 // ================= NAVIGATION =================

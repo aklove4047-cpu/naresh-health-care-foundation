@@ -531,6 +531,22 @@ const DEFAULT_DATA = {
         }
       }
     }
+  },
+
+  siteSettings: {
+    emergencyNotice: "<strong>Medical Notice:</strong> For life-threatening emergencies, call <strong>108 / 112</strong> or visit your nearest emergency room.",
+    helplinePhone: "+91 98765 43210",
+    whatsappNumber: "+91 98765 43210",
+    headquartersAddress: "Foundation Headquarters, Civil Lines Road, Near Medical College, Uttar Pradesh - 202001",
+    announcements: [
+      {
+        id: "anc-1",
+        title: "Arogya Mega Free Health & Eye Screening Camp",
+        date: "25 October 2026",
+        location: "Community Center, Sector 4 Zone",
+        status: "Active"
+      }
+    ]
   }
 };
 

@@ -24,12 +24,12 @@
     <!-- Emergency & Medical Disclaimer Topbar -->
     <div class="emergency-topbar" id="emergencyTopbar">
       <div class="container">
-        <div class="emergency-tag">
+        <div class="emergency-tag" id="topbarNoticeTag">
           <span class="pulse-dot"></span>
-          <strong>Medical Notice:</strong> For life-threatening emergencies, call <strong>108 / 112</strong> or visit your nearest emergency room.
+          <span id="topbarNoticeText"><strong>Medical Notice:</strong> For life-threatening emergencies, call <strong>108 / 112</strong> or visit your nearest emergency room.</span>
         </div>
         <div class="topbar-contact-items">
-          <span>📞 Helpline: <strong>+91 98765 43210</strong></span>
+          <span>📞 Helpline: <strong id="topbarHelplineText">+91 98765 43210</strong></span>
           <a href="https://wa.me/919876543210?text=Hello%20Naresh%20Healthcare,%20I%20need%20assistance" target="_blank" class="badge badge-success" style="color: #065f46; font-weight:700;">
             💬 WhatsApp Us
           </a>
@@ -71,10 +71,6 @@
           <button class="btn btn-sm btn-primary" onclick="openDonationModal()">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
             Donate
-          </button>
-          <button class="btn btn-sm btn-secondary" onclick="openAdminModal()" title="Admin Operations">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-            Admin
           </button>
         </div>
       </div>
@@ -1055,205 +1051,6 @@
     </div>
   </div>
 
-  <!-- Unified Role-Based Admin Dashboard Modal / View -->
-  <div class="modal-overlay" id="adminModal">
-    <div class="modal-dialog" style="max-width:1150px; width:95vw;">
-      <div class="admin-shell">
-        <div class="admin-header">
-          <div style="display:flex; align-items:center; gap:1rem;">
-            <div style="font-size:1.4rem;">⚙️</div>
-            <div>
-              <h3 style="color:#ffffff; font-size:1.2rem;">Naresh Unified Admin Dashboard</h3>
-              <span style="font-size:0.75rem; color:#94a3b8;">Role: Super Admin | Full Operations Control</span>
-            </div>
-          </div>
-          <div style="display:flex; gap:0.5rem; align-items:center;">
-            <select id="adminRoleSelector" onchange="handleAdminRoleSwitch(this.value)" style="padding:0.4rem 0.75rem; font-size:0.8rem; border-radius:var(--radius-sm); background:#334155; color:#fff; border:1px solid #475569;">
-              <option value="super_admin">Role: Super Admin</option>
-              <option value="clinic_admin">Role: Clinic Receptionist / Admin</option>
-              <option value="foundation_admin">Role: Foundation Admin</option>
-            </select>
-            <button class="modal-close-btn" style="color:#fff;" onclick="closeModal('adminModal')">&times;</button>
-          </div>
-        </div>
-
-        <!-- Admin Tabs -->
-        <div class="admin-tabs-nav">
-          <button class="admin-tab-btn active" onclick="switchAdminTab('overview', this)">📊 Operational Overview</button>
-          <button class="admin-tab-btn" onclick="switchAdminTab('appointments', this)">📅 Appointments (<span id="adminAptCount">4</span>)</button>
-          <button class="admin-tab-btn" onclick="switchAdminTab('members', this)">🪪 Member Approvals (<span id="adminMbrCount">4</span>)</button>
-          <button class="admin-tab-btn" onclick="switchAdminTab('donations', this)">💰 Donations & 80G (<span id="adminDonCount">3</span>)</button>
-          <button class="admin-tab-btn" onclick="switchAdminTab('enquiries', this)">💬 Inquiries (<span id="adminEnqCount">2</span>)</button>
-        </div>
-
-        <div class="admin-content">
-          <!-- TAB 1: OVERVIEW -->
-          <div id="adminTab-overview">
-            <div class="stats-grid">
-              <div class="stat-card">
-                <div class="stat-card-info">
-                  <h4>Total Appointments</h4>
-                  <div class="number" id="dashTotalApt">4</div>
-                </div>
-                <div class="stat-card-icon">📅</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-card-info">
-                  <h4>Active Members</h4>
-                  <div class="number" id="dashActiveMbr">2</div>
-                </div>
-                <div class="stat-card-icon" style="background:#fef3c7; color:#d97706;">🪪</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-card-info">
-                  <h4>Donations Raised</h4>
-                  <div class="number" id="dashTotalDonations">₹18,500</div>
-                </div>
-                <div class="stat-card-icon" style="background:#d1fae5; color:#059669;">💰</div>
-              </div>
-              <div class="stat-card">
-                <div class="stat-card-info">
-                  <h4>Pending Inquiries</h4>
-                  <div class="number" id="dashPendingEnquiries">1</div>
-                </div>
-                <div class="stat-card-icon" style="background:#fee2e2; color:#dc2626;">💬</div>
-              </div>
-            </div>
-
-            <div style="background:#ffffff; border-radius:var(--radius-lg); border:1px solid var(--border-color); padding:1.5rem; margin-bottom:1.5rem;">
-              <h4 style="margin-bottom:1rem;">Quick Administrative Tools</h4>
-              <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-                <button class="btn btn-outline btn-sm" onclick="exportDataCSV('appointments')">📥 Export Appointments CSV</button>
-                <button class="btn btn-outline btn-sm" onclick="exportDataCSV('members')">📥 Export Members CSV</button>
-                <button class="btn btn-outline btn-sm" onclick="exportDataCSV('donations')">📥 Export Donations CSV</button>
-                <button class="btn btn-outline btn-sm" onclick="resetDemoData()">🔄 Reset Mock Database</button>
-              </div>
-            </div>
-          </div>
-
-          <!-- TAB 2: APPOINTMENTS -->
-          <div id="adminTab-appointments" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:1rem;">
-              <div style="display:flex; gap:0.5rem;">
-                <select id="adminAptFilter" onchange="renderAdminAppointments()" style="padding:0.4rem 0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
-                  <option value="all">All Statuses</option>
-                  <option value="Requested">Requested</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="Completed">Completed</option>
-                  <option value="Cancelled">Cancelled</option>
-                </select>
-              </div>
-              <button class="btn btn-sm btn-outline" onclick="exportDataCSV('appointments')">📥 Export CSV</button>
-            </div>
-
-            <div class="table-responsive">
-              <table class="data-table" id="adminAppointmentsTable">
-                <thead>
-                  <tr>
-                    <th>Token ID</th>
-                    <th>Patient Details</th>
-                    <th>Clinic / Center</th>
-                    <th>Doctor</th>
-                    <th>Date & Slot</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="adminAppointmentsTbody">
-                  <!-- Rendered dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- TAB 3: MEMBERS -->
-          <div id="adminTab-members" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:1rem;">
-              <div style="display:flex; gap:0.5rem;">
-                <select id="adminMbrFilter" onchange="renderAdminMembers()" style="padding:0.4rem 0.75rem; border-radius:var(--radius-sm); border:1px solid var(--border-color);">
-                  <option value="all">All Memberships</option>
-                  <option value="New">New Applications</option>
-                  <option value="Under Review">Under Review</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Rejected">Rejected</option>
-                </select>
-              </div>
-              <button class="btn btn-sm btn-outline" onclick="exportDataCSV('members')">📥 Export CSV</button>
-            </div>
-
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Member ID</th>
-                    <th>Applicant Name</th>
-                    <th>Contact</th>
-                    <th>Category</th>
-                    <th>Blood Group</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="adminMembersTbody">
-                  <!-- Rendered dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- TAB 4: DONATIONS -->
-          <div id="adminTab-donations" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h4>Donation Transactions & Receipts</h4>
-              <button class="btn btn-sm btn-outline" onclick="exportDataCSV('donations')">📥 Export CSV</button>
-            </div>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Receipt No</th>
-                    <th>Donor Name</th>
-                    <th>Amount</th>
-                    <th>Cause</th>
-                    <th>Payment Mode</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody id="adminDonationsTbody">
-                  <!-- Rendered dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- TAB 5: ENQUIRIES -->
-          <div id="adminTab-enquiries" style="display:none;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-              <h4>Public Inquiries & Camp Requests</h4>
-            </div>
-            <div class="table-responsive">
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>ID</th>
-                    <th>Sender</th>
-                    <th>Center of Interest</th>
-                    <th>Subject & Message</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody id="adminEnquiriesTbody">
-                  <!-- Rendered dynamically -->
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Main Footer -->
   <footer class="main-footer">
@@ -1328,7 +1125,6 @@
 
   <!-- Scripts -->
   <script src="js/data.js"></script>
-  <script src="js/admin.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

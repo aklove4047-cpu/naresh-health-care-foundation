@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Operations Center | Naresh Healthcare Platform</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin-portal.css">
+</head>
+<body>
+
+  <!-- ================= SECURE LOGIN OVERLAY ================= -->
+  <div class="login-screen-overlay" id="adminLoginOverlay">
+    <div class="login-box">
+      <div class="login-brand-icon">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <path d="m9 12 2 2 4-4"/>
+        </svg>
+      </div>
+      <h2>Naresh Healthcare Admin</h2>
+      <p>Enter administrative credentials to manage appointments, doctors, courses & foundation operations.</p>
+      
+      <form onsubmit="handleAdminLogin(event)">
+        <div class="login-form-group">
+          <label>Admin Username / Email</label>
+          <input type="text" id="adminLoginUsername" class="login-input" value="admin" required placeholder="admin">
+        </div>
+        <div class="login-form-group">
+          <label>Password or Security PIN</label>
+          <input type="password" id="adminLoginPassword" class="login-input" value="Sanju047@#" required placeholder="••••••••">
+        </div>
+        <button type="submit" class="login-submit-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+          Authorize & Enter Dashboard
+        </button>
+      </form>
+
+      <div class="login-hint">
+        💡 <strong>Quick Login Access:</strong> Default username: <code>admin</code> • Password: <code>Sanju047@#</code> (or PIN <code>1947</code>)
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SIDEBAR ================= -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-brand-badge">N</div>
+      <div>
+        <div class="sidebar-brand-title">NARESH PORTAL</div>
+        <div class="sidebar-brand-sub">
+          <span class="status-dot-live"></span>
+          Operations Online
+        </div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-title">Core Operations</div>
+      <button class="nav-item-btn active" onclick="switchPanel('overview', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview Dashboard
+      </button>
+      <button class="nav-item-btn" onclick="switchPanel('appointments', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        Appointments & OPD
+        <span class="nav-badge-count" id="badgeAptCount">4</span>
+      </button>
+      <button class="nav-item-btn" onclick="switchPanel('doctors', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+        Doctors & Staff
+        <span class="nav-badge-count" id="badgeDocCount">5</span>
+      </button>
+
+      <div class="nav-section-title">Foundation & Learning</div>
+      <button class="nav-item-btn" onclick="switchPanel('courses', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        Courses & Training
+      </button>
+      <button class="nav-item-btn" onclick="switchPanel('donations', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Donations & 80G
+        <span class="nav-badge-count" id="badgeDonCount">3</span>
+      </button>
+      <button class="nav-item-btn" onclick="switchPanel('members', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Members & Volunteers
+        <span class="nav-badge-count" id="badgeMbrCount">4</span>
+      </button>
+
+      <div class="nav-section-title">Site Management</div>
+      <button class="nav-item-btn" onclick="switchPanel('content', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+        Notices & Broadcast
+      </button>
+      <button class="nav-item-btn" onclick="switchPanel('institutions', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18"/><path d="M3 7v1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7m0 1a3 3 0 0 0 6 0V7H3l2-4h14l2 4"/><line x1="5" y1="21" x2="5" y2="10.85"/><line x1="19" y1="21" x2="19" y2="10.85"/><line x1="9" y1="21" x2="9" y2="11"/><line x1="15" y1="21" x2="15" y2="11"/></svg>
+        Four Institutions
+      </button>
+      <button class="nav-item-btn" onclick="switchPanel('inquiries', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Inquiries & Feedback
+        <span class="nav-badge-count" id="badgeInqCount">1</span>
+      </button>
+      <button class="nav-item-btn" onclick="switchPanel('settings', this)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Database & Backups
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user-card">
+        <div class="user-avatar">AD</div>
+        <div class="user-info">
+          <div class="user-name">Dr. Arvind Naresh</div>
+          <div class="user-role">Super Admin</div>
+        </div>
+        <button class="btn-sidebar-logout" onclick="handleAdminLogout()" title="Log out">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ================= MAIN WRAPPER ================= -->
+  <div class="admin-main-wrapper">
+    <!-- Topbar -->
+    <header class="admin-topbar">
+      <div class="topbar-left">
+        <button class="mobile-menu-toggle" onclick="toggleMobileSidebar()">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <div class="breadcrumbs-box">
+          <span class="breadcrumb-root">Naresh Healthcare</span>
+          <span class="breadcrumb-divider">/</span>
+          <span class="breadcrumb-active" id="activeBreadcrumbText">Executive Dashboard</span>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <div class="topbar-clock" id="adminLiveClock">Syncing time...</div>
+        <a href="./" target="_blank" class="btn-live-site-preview">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          View Live Website
+        </a>
+      </div>
+    </header>
+
+    <!-- Page Body -->
+    <main class="admin-page-container">
+
+      <!-- ================= PANEL 1: OVERVIEW ================= -->
+      <section class="admin-view-panel active" id="panel-overview">
+        <div class="panel-page-header">
+          <div>
+            <h1>Executive Operations Overview</h1>
+            <p>Real-time healthcare analytics, outpatient stats, donations ledger, and foundation metrics.</p>
+          </div>
+          <div class="panel-header-actions">
+            <button class="btn-adm btn-adm-primary" onclick="openWalkinAppointmentModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New Walk-in Patient
+            </button>
+            <button class="btn-adm btn-adm-success" onclick="openRecordDonationModal()">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+              Record Donation
+            </button>
+          </div>
+        </div>
+
+        <!-- Metric Grid -->
+        <div class="metric-cards-grid">
+          <div class="metric-card" style="--metric-accent: #0ea5e9;">
+            <div>
+              <div class="metric-title">Total Appointments</div>
+              <div class="metric-number" id="metricTotalApts">0</div>
+              <div class="metric-change positive">● Across 4 Institutions</div>
+            </div>
+            <div class="metric-icon-box">📅</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #10b981;">
+            <div>
+              <div class="metric-title">80G Donations Raised</div>
+              <div class="metric-number" id="metricTotalDonations">₹0</div>
+              <div class="metric-change positive">● 100% Tax-Exempt Funds</div>
+            </div>
+            <div class="metric-icon-box" style="background:var(--adm-success-subtle); color:var(--adm-success);">💰</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #8b5cf6;">
+            <div>
+              <div class="metric-title">Active Doctors</div>
+              <div class="metric-number" id="metricActiveDoctors">0</div>
+              <div class="metric-change neutral">● Specialists On Duty</div>
+            </div>
+            <div class="metric-icon-box" style="background:rgba(139, 92, 246, 0.12); color:#8b5cf6;">👨‍⚕️</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #f59e0b;">
+            <div>
+              <div class="metric-title">Approved Members</div>
+              <div class="metric-number" id="metricApprovedMembers">0</div>
+              <div class="metric-change positive">● Certified Volunteers</div>
+            </div>
+            <div class="metric-icon-box" style="background:var(--adm-warning-subtle); color:var(--adm-warning);">🪪</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #ec4899;">
+            <div>
+              <div class="metric-title">Active Courses</div>
+              <div class="metric-number" id="metricActiveCourses">0</div>
+              <div class="metric-change neutral">● First Aid & Skills</div>
+            </div>
+            <div class="metric-icon-box" style="background:rgba(236, 72, 153, 0.12); color:#ec4899;">📚</div>
+          </div>
+          <div class="metric-card" style="--metric-accent: #ef4444;">
+            <div>
+              <div class="metric-title">Pending Inquiries</div>
+              <div class="metric-number" id="metricPendingInquiries">0</div>
+              <div class="metric-change neutral">● Needs Attention</div>
+            </div>
+            <div class="metric-icon-box" style="background:var(--adm-danger-subtle); color:var(--adm-danger);">💬</div>
+          </div>
+        </div>
+
+        <!-- Recent Appointments Stream -->
+        <div class="data-panel-card">
+          <div class="panel-card-header">
+            <h3 class="panel-card-title">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Recent Outpatient Bookings Stream
+            </h3>
+            <button class="btn-adm btn-adm-outline btn-adm-sm" onclick="switchPanel('appointments')">
+              View All Appointments →
+            </button>
+          </div>
+          <div class="table-responsive-adm">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Token</th>
+                  <th>Patient</th>
+                  <th>Center</th>
+                  <th>Date & Slot</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="recentAptsTbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL 2: APPOINTMENTS ================= -->
+      <section class="admin-view-panel" id="panel-appointments">
+        <div class="panel-page-header">
+          <div>
+            <h1>Appointments & Outpatient Desk</h1>
+            <p>Manage, confirm, complete, and print consultation tokens across Foundation, e-Clinics & First Aid Centers.</p>
+          </div>
+          <div class="panel-header-actions">
+            <button class="btn-adm btn-adm-outline" onclick="exportCSV('appointments')">📥 Export CSV</button>
+            <button class="btn-adm btn-adm-primary" onclick="openWalkinAppointmentModal()">+ New Walk-in Patient</button>
+          </div>
+        </div>
+
+        <div class="data-panel-card">
+          <div class="panel-card-header">
+            <div class="panel-card-tools">
+              <div class="search-input-wrapper">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" id="aptSearchInput" oninput="renderAppointmentsAdmin()" placeholder="Search patient, token, phone...">
+              </div>
+              <select class="select-filter-adm" id="aptStatusFilter" onchange="renderAppointmentsAdmin()">
+                <option value="all">All Statuses</option>
+                <option value="Requested">Requested</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+              </select>
+              <select class="select-filter-adm" id="aptClinicFilter" onchange="renderAppointmentsAdmin()">
+                <option value="all">All Centers</option>
+                <option value="foundation">Naresh Foundation</option>
+                <option value="eclinic">X-Press e-Clinic</option>
+                <option value="chc_fac">Community Health Center</option>
+                <option value="fac">First Aid Center</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-responsive-adm">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Token ID</th>
+                  <th>Patient Details</th>
+                  <th>Medical Center</th>
+                  <th>Doctor</th>
+                  <th>Schedule</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminAptTbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL 3: DOCTORS ================= -->
+      <section class="admin-view-panel" id="panel-doctors">
+        <div class="panel-page-header">
+          <div>
+            <h1>Doctor & Medical Staff Directory</h1>
+            <p>Add, edit, assign clinics, schedule available days, and configure consultation fees.</p>
+          </div>
+          <div class="panel-header-actions">
+            <button class="btn-adm btn-adm-primary" onclick="openAddDoctorModal()">+ Add New Doctor</button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; gap:1rem; flex-wrap:wrap;">
+          <div class="search-input-wrapper">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="doctorSearchInput" oninput="renderDoctorsAdmin()" placeholder="Search doctors by name or specialty...">
+          </div>
+          <select class="select-filter-adm" id="doctorClinicFilter" onchange="renderDoctorsAdmin()">
+            <option value="all">All Clinics / Centers</option>
+            <option value="foundation">Naresh Foundation</option>
+            <option value="eclinic">X-Press e-Clinic</option>
+            <option value="chc_fac">Community Health Center</option>
+            <option value="fac">First Aid Center</option>
+          </select>
+        </div>
+
+        <div class="doctor-cards-grid" id="adminDoctorCardsGrid">
+          <!-- Dynamically rendered -->
+        </div>
+      </section>
+
+      <!-- ================= PANEL 4: COURSES ================= -->
+      <section class="admin-view-panel" id="panel-courses">
+        <div class="panel-page-header">
+          <div>
+            <h1>E-Learning & Vocational Skills Hub</h1>
+            <p>Publish certified first-aid courses, manage lesson curricula, and inspect student completion.</p>
+          </div>
+          <div class="panel-header-actions">
+            <button class="btn-adm btn-adm-primary" onclick="openAddCourseModal()">+ Publish New Course</button>
+          </div>
+        </div>
+
+        <div class="doctor-cards-grid" id="adminCoursesGrid">
+          <!-- Dynamically rendered -->
+        </div>
+      </section>
+
+      <!-- ================= PANEL 5: DONATIONS ================= -->
+      <section class="admin-view-panel" id="panel-donations">
+        <div class="panel-page-header">
+          <div>
+            <h1>Donations & 80G Tax Exemption Ledger</h1>
+            <p>Audit contributions, issue offline receipts, and generate certified 80G tax certificates.</p>
+          </div>
+          <div class="panel-header-actions">
+            <button class="btn-adm btn-adm-outline" onclick="exportCSV('donations')">📥 Export Ledger CSV</button>
+            <button class="btn-adm btn-adm-success" onclick="openRecordDonationModal()">+ Record Offline Donation</button>
+          </div>
+        </div>
+
+        <div class="data-panel-card">
+          <div class="table-responsive-adm">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>80G Receipt</th>
+                  <th>Donor Details</th>
+                  <th>Amount</th>
+                  <th>Donation Cause</th>
+                  <th>Payment Mode</th>
+                  <th>Date</th>
+                  <th>Receipt</th>
+                </tr>
+              </thead>
+              <tbody id="adminDonationsTbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL 6: MEMBERS ================= -->
+      <section class="admin-view-panel" id="panel-members">
+        <div class="panel-page-header">
+          <div>
+            <h1>Foundation Members & Healthcare Volunteers</h1>
+            <p>Review volunteer applications, approve members, and issue official ID cards.</p>
+          </div>
+          <div class="panel-header-actions">
+            <button class="btn-adm btn-adm-outline" onclick="exportCSV('members')">📥 Export Members CSV</button>
+          </div>
+        </div>
+
+        <div class="data-panel-card">
+          <div class="panel-card-header">
+            <div class="panel-card-tools">
+              <select class="select-filter-adm" id="memberFilterStatus" onchange="renderMembersAdmin()">
+                <option value="all">All Memberships</option>
+                <option value="New">New Applications</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+              </select>
+            </div>
+          </div>
+          <div class="table-responsive-adm">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Member ID</th>
+                  <th>Volunteer Name</th>
+                  <th>Contact Info</th>
+                  <th>Category</th>
+                  <th>Blood Group</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminMembersTbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL 7: NOTICES & BROADCAST ================= -->
+      <section class="admin-view-panel" id="panel-content">
+        <div class="panel-page-header">
+          <div>
+            <h1>Website Notices, Helplines & Health Camps</h1>
+            <p>Changes saved here update the live website's topbar banner and helplines immediately.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1.2fr 1fr; gap:1.5rem;">
+          <!-- Emergency & Helplines Card -->
+          <div class="data-panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">🚨 Emergency Topbar & Official Helplines</h3>
+            </div>
+            <form style="padding:1.5rem;" onsubmit="saveSiteSettingsForm(event)">
+              <div class="form-group-adm">
+                <label>Emergency Topbar Scrolling/Notice Text (HTML Allowed)</label>
+                <textarea class="form-textarea-adm" id="settingEmergencyNotice" rows="3"></textarea>
+              </div>
+              <div class="form-grid-2">
+                <div class="form-group-adm">
+                  <label>Primary Helpline Number</label>
+                  <input type="text" class="form-input-adm" id="settingHelplinePhone">
+                </div>
+                <div class="form-group-adm">
+                  <label>WhatsApp Helpline Number</label>
+                  <input type="text" class="form-input-adm" id="settingWhatsappNumber">
+                </div>
+              </div>
+              <div class="form-group-adm">
+                <label>Foundation HQ Registered Address</label>
+                <input type="text" class="form-input-adm" id="settingHqAddress">
+              </div>
+              <button type="submit" class="btn-adm btn-adm-primary">💾 Save & Update Live Website</button>
+            </form>
+          </div>
+
+          <!-- Broadcast Health Camp Card -->
+          <div class="data-panel-card">
+            <div class="panel-card-header">
+              <h3 class="panel-card-title">📢 Broadcast Community Health Camp</h3>
+            </div>
+            <form style="padding:1.5rem;" onsubmit="broadcastNewCamp(event)">
+              <div class="form-group-adm">
+                <label>Camp Event Title</label>
+                <input type="text" class="form-input-adm" id="campTitle" placeholder="e.g. Free Eye Screening & Diabetes Camp" required>
+              </div>
+              <div class="form-group-adm">
+                <label>Date & Timings</label>
+                <input type="text" class="form-input-adm" id="campDate" placeholder="e.g. 28 Oct 2026 • 09:00 AM – 03:00 PM" required>
+              </div>
+              <div class="form-group-adm">
+                <label>Village / Center Location</label>
+                <input type="text" class="form-input-adm" id="campLocation" placeholder="e.g. Primary School Hall, Block B" required>
+              </div>
+              <button type="submit" class="btn-adm btn-adm-success">+ Broadcast Camp</button>
+            </form>
+            <div style="padding: 0 1.5rem 1.5rem;">
+              <h4 style="font-size:0.85rem; color:var(--adm-text-secondary); margin-bottom:0.75rem;">Active Announcements:</h4>
+              <div id="announcementsListAdmin"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL 8: INSTITUTIONS ================= -->
+      <section class="admin-view-panel" id="panel-institutions">
+        <div class="panel-page-header">
+          <div>
+            <h1>Four Institutions Profiles & Operational Hours</h1>
+            <p>Manage individual contact numbers, clinic timings, and facility locations.</p>
+          </div>
+        </div>
+
+        <div id="institutionsAdminList">
+          <!-- Dynamically rendered -->
+        </div>
+      </section>
+
+      <!-- ================= PANEL 9: INQUIRIES ================= -->
+      <section class="admin-view-panel" id="panel-inquiries">
+        <div class="panel-page-header">
+          <div>
+            <h1>Patient Inquiries & Public Feedback</h1>
+            <p>Direct patient queries submitted through the online contact form.</p>
+          </div>
+        </div>
+
+        <div class="data-panel-card">
+          <div class="table-responsive-adm">
+            <table class="adm-table">
+              <thead>
+                <tr>
+                  <th>Query ID</th>
+                  <th>Sender</th>
+                  <th>Center</th>
+                  <th>Subject & Message</th>
+                  <th>Status</th>
+                  <th>Reply Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminInquiriesTbody">
+                <!-- Dynamically rendered -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PANEL 10: SETTINGS & BACKUP ================= -->
+      <section class="admin-view-panel" id="panel-settings">
+        <div class="panel-page-header">
+          <div>
+            <h1>Database Backups & System Maintenance</h1>
+            <p>Export all platform records to JSON, restore backups, or reset mock records.</p>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap:1.5rem;">
+          <div class="data-panel-card" style="padding:1.5rem;">
+            <h3 style="color:#fff; margin-bottom:0.5rem;">💾 Full Database Export</h3>
+            <p style="font-size:0.85rem; color:var(--adm-text-secondary); margin-bottom:1.25rem;">
+              Download a complete JSON snapshot containing all appointments, doctor records, courses, donations, and member applications.
+            </p>
+            <button class="btn-adm btn-adm-primary" onclick="exportFullBackupJSON()">Download Backup (.json)</button>
+          </div>
+
+          <div class="data-panel-card" style="padding:1.5rem;">
+            <h3 style="color:#fff; margin-bottom:0.5rem;">📂 Restore from Backup</h3>
+            <p style="font-size:0.85rem; color:var(--adm-text-secondary); margin-bottom:1.25rem;">
+              Upload a previously exported <code>.json</code> file to synchronize all platform data instantly.
+            </p>
+            <input type="file" id="backupFileInput" accept=".json" onchange="handleBackupImport(event)" style="display:none;">
+            <button class="btn-adm btn-adm-outline" onclick="document.getElementById('backupFileInput').click()">Select JSON File to Restore</button>
+          </div>
+
+          <div class="data-panel-card" style="padding:1.5rem;">
+            <h3 style="color:var(--adm-danger); margin-bottom:0.5rem;">⚠️ Factory Reset</h3>
+            <p style="font-size:0.85rem; color:var(--adm-text-secondary); margin-bottom:1.25rem;">
+              Reinitialize all platform data back to original default mock records. Use with caution.
+            </p>
+            <button class="btn-adm btn-adm-danger" onclick="resetSystemData()">Restore Default Records</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ================= MODALS ================= -->
+
+  <!-- Add/Edit Doctor Modal -->
+  <div class="adm-modal-overlay" id="doctorFormModal">
+    <div class="adm-modal-dialog">
+      <div class="adm-modal-header">
+        <h3 id="doctorModalTitle">Add New Doctor</h3>
+        <button class="btn-sidebar-logout" onclick="closeAdmModal('doctorFormModal')">&times;</button>
+      </div>
+      <form onsubmit="saveDoctorForm(event)">
+        <div class="adm-modal-body">
+          <input type="hidden" id="doctorFormId">
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Doctor Full Name</label>
+              <input type="text" class="form-input-adm" id="docFormName" required placeholder="e.g. Dr. Rajesh Verma">
+            </div>
+            <div class="form-group-adm">
+              <label>Clinical Specialty</label>
+              <input type="text" class="form-input-adm" id="docFormSpecialty" required placeholder="e.g. Trauma & Emergency Care">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Degrees & Qualifications</label>
+              <input type="text" class="form-input-adm" id="docFormQualifications" required placeholder="e.g. MBBS, MS, FCGP">
+            </div>
+            <div class="form-group-adm">
+              <label>Clinical Experience</label>
+              <input type="text" class="form-input-adm" id="docFormExperience" required placeholder="e.g. 15+ Years">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Consultation Fee</label>
+              <input type="text" class="form-input-adm" id="docFormFee" required placeholder="e.g. ₹250 (Subsidized)">
+            </div>
+            <div class="form-group-adm">
+              <label>Working Days (comma separated)</label>
+              <input type="text" class="form-input-adm" id="docFormDays" required placeholder="Mon, Tue, Wed, Thu, Fri">
+            </div>
+          </div>
+          <div class="form-group-adm">
+            <label>Available Consultation Slots (comma separated)</label>
+            <input type="text" class="form-input-adm" id="docFormSlots" required placeholder="10:00 AM, 11:30 AM, 05:00 PM">
+          </div>
+          <div class="form-group-adm">
+            <label>Assigned Medical Centers</label>
+            <div id="docClinicCheckboxes" style="display:flex; flex-wrap:wrap; gap:1rem; font-size:0.85rem; color:#cbd5e1;">
+              <label><input type="checkbox" value="foundation" checked> Naresh Foundation</label>
+              <label><input type="checkbox" value="eclinic" checked> X-Press e-Clinic</label>
+              <label><input type="checkbox" value="chc_fac" checked> Community Health Center</label>
+              <label><input type="checkbox" value="fac" checked> First Aid Center</label>
+            </div>
+          </div>
+          <div class="form-group-adm">
+            <label>Doctor Bio & Experience Summary</label>
+            <textarea class="form-textarea-adm" id="docFormBio" rows="2" placeholder="Brief professional biography..."></textarea>
+          </div>
+        </div>
+        <div class="adm-modal-footer">
+          <button type="button" class="btn-adm btn-adm-outline" onclick="closeAdmModal('doctorFormModal')">Cancel</button>
+          <button type="submit" class="btn-adm btn-adm-primary">Save Doctor Profile</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Walk-in Appointment Modal -->
+  <div class="adm-modal-overlay" id="walkinAppointmentModal">
+    <div class="adm-modal-dialog">
+      <div class="adm-modal-header">
+        <h3>Create In-Person Walk-in Appointment</h3>
+        <button class="btn-sidebar-logout" onclick="closeAdmModal('walkinAppointmentModal')">&times;</button>
+      </div>
+      <form onsubmit="saveWalkinAppointment(event)">
+        <div class="adm-modal-body">
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Patient Full Name</label>
+              <input type="text" class="form-input-adm" id="walkinPatientName" required placeholder="Full Name">
+            </div>
+            <div class="form-group-adm">
+              <label>Patient Contact Phone</label>
+              <input type="tel" class="form-input-adm" id="walkinPatientPhone" required placeholder="+91 98765 00000">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Medical Center</label>
+              <select class="form-select-adm" id="walkinClinicSelect">
+                <option value="eclinic">Naresh X-Press e-Clinic</option>
+                <option value="chc_fac">Community Health Center</option>
+                <option value="fac">First Aid Center</option>
+                <option value="foundation">Naresh Foundation Camp</option>
+              </select>
+            </div>
+            <div class="form-group-adm">
+              <label>Attending Doctor</label>
+              <select class="form-select-adm" id="walkinDoctorSelect">
+                <!-- Dynamically populated -->
+              </select>
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Consultation Date</label>
+              <input type="date" class="form-input-adm" id="walkinDate" required>
+            </div>
+            <div class="form-group-adm">
+              <label>Time Slot</label>
+              <select class="form-select-adm" id="walkinSlot">
+                <option value="Immediate Walk-in">Immediate Walk-in</option>
+                <option value="10:00 AM">10:00 AM</option>
+                <option value="11:30 AM">11:30 AM</option>
+                <option value="04:30 PM">04:30 PM</option>
+                <option value="06:00 PM">06:00 PM</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group-adm">
+            <label>Symptoms / Consultation Reason</label>
+            <input type="text" class="form-input-adm" id="walkinReason" placeholder="e.g. Fever checkup, blood pressure test">
+          </div>
+        </div>
+        <div class="adm-modal-footer">
+          <button type="button" class="btn-adm btn-adm-outline" onclick="closeAdmModal('walkinAppointmentModal')">Cancel</button>
+          <button type="submit" class="btn-adm btn-adm-primary">Generate Token & Confirm</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Add Course Modal -->
+  <div class="adm-modal-overlay" id="courseFormModal">
+    <div class="adm-modal-dialog">
+      <div class="adm-modal-header">
+        <h3>Publish New E-Learning Course</h3>
+        <button class="btn-sidebar-logout" onclick="closeAdmModal('courseFormModal')">&times;</button>
+      </div>
+      <form onsubmit="saveCourseForm(event)">
+        <div class="adm-modal-body">
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Course Code</label>
+              <input type="text" class="form-input-adm" id="courseFormCode" required placeholder="e.g. FA-102">
+            </div>
+            <div class="form-group-adm">
+              <label>Category</label>
+              <select class="form-select-adm" id="courseFormCategory">
+                <option value="First Aid & Emergency">First Aid & Emergency</option>
+                <option value="Healthcare & Nursing Assistant">Healthcare & Nursing Assistant</option>
+                <option value="Pharmacy & Dispensary">Pharmacy & Dispensary</option>
+                <option value="Community Wellness">Community Wellness</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group-adm">
+            <label>Course Title</label>
+            <input type="text" class="form-input-adm" id="courseFormTitle" required placeholder="e.g. Pediatric Emergency First Response">
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Lead Instructor</label>
+              <input type="text" class="form-input-adm" id="courseFormInstructor" required>
+            </div>
+            <div class="form-group-adm">
+              <label>Duration</label>
+              <input type="text" class="form-input-adm" id="courseFormDuration" required placeholder="e.g. 4 Weeks">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Lessons Count</label>
+              <input type="number" class="form-input-adm" id="courseFormLessons" value="6" required>
+            </div>
+            <div class="form-group-adm">
+              <label>Course Fee (₹) [0 for Free]</label>
+              <input type="number" class="form-input-adm" id="courseFormFee" value="0" required>
+            </div>
+          </div>
+          <div class="form-group-adm">
+            <label>Course Overview</label>
+            <textarea class="form-textarea-adm" id="courseFormOverview" rows="3" required placeholder="Detailed course description..."></textarea>
+          </div>
+        </div>
+        <div class="adm-modal-footer">
+          <button type="button" class="btn-adm btn-adm-outline" onclick="closeAdmModal('courseFormModal')">Cancel</button>
+          <button type="submit" class="btn-adm btn-adm-primary">Publish Course</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Record Donation Modal -->
+  <div class="adm-modal-overlay" id="recordDonationModal">
+    <div class="adm-modal-dialog">
+      <div class="adm-modal-header">
+        <h3>Record Donation & Issue 80G Receipt</h3>
+        <button class="btn-sidebar-logout" onclick="closeAdmModal('recordDonationModal')">&times;</button>
+      </div>
+      <form onsubmit="saveDonationForm(event)">
+        <div class="adm-modal-body">
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>80G Receipt Number</label>
+              <input type="text" class="form-input-adm" id="donationFormReceiptNo" required readonly>
+            </div>
+            <div class="form-group-adm">
+              <label>Donation Amount (₹)</label>
+              <input type="number" class="form-input-adm" id="donationFormAmount" required min="100">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Donor Full Name</label>
+              <input type="text" class="form-input-adm" id="donationFormDonorName" required placeholder="Individual or Company">
+            </div>
+            <div class="form-group-adm">
+              <label>Donor Phone</label>
+              <input type="tel" class="form-input-adm" id="donationFormPhone" required placeholder="+91 98765 00000">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Donor Email</label>
+              <input type="email" class="form-input-adm" id="donationFormEmail" required placeholder="donor@example.com">
+            </div>
+            <div class="form-group-adm">
+              <label>Donor PAN Card (For 80G tax rebate)</label>
+              <input type="text" class="form-input-adm" id="donationFormPan" placeholder="ABCDE1234F">
+            </div>
+          </div>
+          <div class="form-grid-2">
+            <div class="form-group-adm">
+              <label>Designated Purpose</label>
+              <select class="form-select-adm" id="donationFormPurpose">
+                <option value="Rural Health Camps & Free Medicine">Rural Health Camps & Free Medicine</option>
+                <option value="X-Press e-Clinic Digital Expansion">X-Press e-Clinic Digital Expansion</option>
+                <option value="First Aid Kits for Village Schools">First Aid Kits for Village Schools</option>
+                <option value="General Foundation Corpus">General Foundation Corpus</option>
+              </select>
+            </div>
+            <div class="form-group-adm">
+              <label>Payment Mode</label>
+              <select class="form-select-adm" id="donationFormMode">
+                <option value="UPI / QR Code">UPI / QR Code</option>
+                <option value="Net Banking / NEFT">Net Banking / NEFT</option>
+                <option value="Credit / Debit Card">Credit / Debit Card</option>
+                <option value="Cheque / Draft">Cheque / Draft</option>
+                <option value="Cash Deposit">Cash Deposit</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="adm-modal-footer">
+          <button type="button" class="btn-adm btn-adm-outline" onclick="closeAdmModal('recordDonationModal')">Cancel</button>
+          <button type="submit" class="btn-adm btn-adm-success">Generate 80G Receipt</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Print Slip Area (Only visible during window.print()) -->
+  <div id="printSlipContent" style="display:none;"></div>
+
+  <!-- Toast Container -->
+  <div class="adm-toast-container" id="adminToastContainer"></div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/admin-portal.js"></script>
+</body>
+</html>
